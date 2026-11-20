@@ -109,6 +109,45 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
     group.add(g);
   };
 
+  // ---------- Puertas automáticas (se abren al acercarse; no bloquean el paso) ----------
+  type AutoDoor = { g: THREE.Group; kind: 'hinge' | 'slide'; x: number; z: number; axis: 'x' | 'z'; open: number; side: number; leaves: THREE.Object3D[]; w: number };
+  const autoDoors: AutoDoor[] = [];
+  const doorGroup = new THREE.Group();
+  const woodDoor = M.std('#8a6446', 0.7);
+  const steelDoor = M.std('#7f8c8d', 0.5, 0.4);
+  const handleM = M.std('#d0d3d6', 0.3, 0.8);
+  /** Puerta batiente; (x,z) = centro del vano; axis = dirección del muro. */
+  const addHingeDoor = (x: number, z: number, axis: 'x' | 'z', w: number, h: number, t: number, mat: THREE.Material) => {
+    const g = new THREE.Group();
+    g.position.set(axis === 'x' ? x - w / 2 : x, 0, axis === 'x' ? z : z - w / 2);
+    g.rotation.y = axis === 'x' ? 0 : -Math.PI / 2;
+    const leaf = new THREE.Group();
+    leaf.add(box(w - 0.04, h - 0.02, t, mat, w / 2, h / 2, 0));
+    leaf.add(box(0.12, 0.04, 0.05, handleM, w - 0.14, 1.0, t / 2 + 0.03), box(0.12, 0.04, 0.05, handleM, w - 0.14, 1.0, -t / 2 - 0.03));
+    g.add(leaf);
+    doorGroup.add(g);
+    autoDoors.push({ g, kind: 'hinge', x, z, axis, open: 0, side: 1, leaves: [leaf], w });
+  };
+  /** Puertas corredizas dobles de vidrio. */
+  const addSlideDoor = (x: number, z: number, axis: 'x' | 'z', w: number, h: number) => {
+    const g = new THREE.Group();
+    g.position.set(x, 0, z);
+    g.rotation.y = axis === 'x' ? 0 : -Math.PI / 2;
+    const leaves: THREE.Object3D[] = [];
+    for (const sgn of [-1, 1]) {
+      const leaf = new THREE.Group();
+      leaf.add(box(w / 2 - 0.02, h, 0.04, M.glass, 0, h / 2, 0));
+      leaf.add(box(w / 2, 0.06, 0.06, M.dark, 0, h - 0.03, 0), box(w / 2, 0.06, 0.06, M.dark, 0, 0.03, 0));
+      leaf.add(box(0.05, h, 0.06, M.dark, sgn * -(w / 4 - 0.02), h / 2, 0));
+      leaf.position.x = sgn * w / 4;
+      leaf.userData.sgn = sgn;
+      g.add(leaf); leaves.push(leaf);
+    }
+    g.add(box(w + 0.1, 0.25, 0.2, M.dark, 0, h + 0.12, 0));
+    doorGroup.add(g);
+    autoDoors.push({ g, kind: 'slide', x, z, axis, open: 0, side: 1, leaves, w });
+  };
+
   const deco = new THREE.Group();
   const shutterM = M.std('#b9bec4', 0.5, 0.45);
   const exitDoors: { hinge: THREE.Group; open: number; sign: number; box: ReturnType<typeof rectAABB>; x: number; z: number; baseRot: number }[] = [];
@@ -143,6 +182,10 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
         place(boxB(0.3, 0.9, 0.25, M.black), o.c + o.w / 2 - 0.2, 0, 0.3);
       }
     } else {
+      if (o.kind === 'puerta') {
+        if (horiz) addHingeDoor(o.c, fixed, 'x', o.w, o.h - 0.05, 0.05, steelDoor);
+        else addHingeDoor(fixed, o.c, 'z', o.w, o.h - 0.05, 0.05, steelDoor);
+      }
       if (o.kind === 'salida') {
         // puerta de emergencia: abre hacia afuera, sólo desde dentro (barra antipánico)
         const outSign = side === 'N' || side === 'W' ? -1 : 1;
@@ -342,7 +385,13 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
         annexWalls.add(m);
         col.addWall(horiz ? rectAABB(c, fixed, l, 0.2, RH) : rectAABB(fixed, c, 0.2, l, RH), 0, RH);
       };
-      for (const d of ds) { seg(cur, d - 0.6); cur = d + 0.6; }
+      for (const d of ds) {
+        seg(cur, d - 0.6); cur = d + 0.6;
+        const DH = 2.15;
+        const lint = horiz ? box(1.2, RH - DH, 0.15, M.officeWall, d, (RH + DH) / 2, fixed) : box(0.15, RH - DH, 1.2, M.officeWall, fixed, (RH + DH) / 2, d);
+        annexWalls.add(lint);
+        if (horiz) addHingeDoor(d, fixed, 'x', 1.1, DH, 0.05, woodDoor); else addHingeDoor(fixed, d, 'z', 1.1, DH, 0.05, woodDoor);
+      }
       seg(cur, a1);
     };
     (['N', 'S', 'E', 'W'] as Side[]).forEach(wallSeg);
@@ -402,6 +451,7 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
     const ez = annexRooms.find((r) => r.id === 'oficinas');
     const eZ = ez ? ez.z + ez.d / 2 : 50;
     entrance = { x: cx, z: eZ + 0.2 };
+    addSlideDoor(cx, eZ, 'x', cx1 - cx0, 2.3);
     // techo del vestíbulo (pasillo de recepción) con plafones
     const vz0 = z1 + WALL_T;
     annexRoof.add(boxB(cx1 - cx0 + 0.3, 0.15, eZ - vz0 + 0.1, M.officeRoof, cx, RH, (vz0 + eZ) / 2));
@@ -494,6 +544,8 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
   bake(seg);
   group.add(seg);
 
+  group.add(doorGroup);
+
   // ---------- Visibilidad techo / muros ----------
   const insideNave = (p: THREE.Vector3) => p.x > x0 && p.x < x1 && p.z > z0 && p.z < z1;
   const insideAnnex = (p: THREE.Vector3) => annexBox.containsPoint(new THREE.Vector3(p.x, 1, p.z)) || (p.x > annexBox.min.x && p.x < annexBox.max.x && p.z > z1 && p.z < annexBox.max.z);
@@ -517,6 +569,18 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
       // salidas de emergencia: se abren al acercarse desde dentro; desde fuera están cerradas
       const inside = insideNave(player);
       col.setDynamic('exits', inside ? [] : exitDoors.map((d) => d.box));
+      for (const d of autoDoors) {
+        const dist = Math.hypot(player.x - d.x, player.z - d.z);
+        const want = dist < (d.kind === 'slide' ? 2.8 : 2.0) ? 1 : 0;
+        if (want && d.open < 0.05) {
+          // abre hacia el lado contrario de donde viene el jugador
+          const local = d.axis === 'x' ? player.z - d.z : -(player.x - d.x);
+          d.side = local >= 0 ? 1 : -1;
+        }
+        d.open += (want - d.open) * Math.min(1, dt * 6);
+        if (d.kind === 'hinge') d.leaves[0].rotation.y = d.side * d.open * 1.5;
+        else for (const l of d.leaves) l.position.x = (l.userData.sgn as number) * (d.w / 4 + d.open * (d.w / 2 - 0.05));
+      }
       for (const d of exitDoors) {
         const near = inside && Math.hypot(player.x - d.x, player.z - d.z) < 3.0;
         d.open += ((near ? 1 : 0) - d.open) * Math.min(1, dt * 4);

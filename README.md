@@ -27,7 +27,7 @@ Recorrido 3D de mundo abierto por la planta de persianas motorizadas de Apodaca,
 
 ## Recorrido guiado
 
-Apareces afuera, en la banqueta del estacionamiento, y entras por la **entrada principal**. Un torniquete obliga a pasar por la **recepción**; los portones de recibo están cerrados y las salidas de emergencia sólo se abren desde dentro. Las misiones siguen el orden de una visita real: recepción → oficinas → seguridad (EPP) → almacén de materia prima → corte → tela y entubado → ensamble → pruebas → empaque y producto terminado → andenes → comparación de layouts → flujos → punto de reunión. Una flecha azul en el piso (calculada con A* para no atravesar muros ni máquinas) indica a dónde ir; se oculta con **G** o desde el menú. Los pasos y textos están en `public/data/recorrido.json`.
+Apareces afuera, en la banqueta del estacionamiento, y entras por la **entrada principal**. Un torniquete obliga a pasar por la **recepción**; los portones de recibo están cerrados y las salidas de emergencia sólo se abren desde dentro. Las puertas (corredizas de vidrio en la entrada, batientes en oficinas y en el acceso a la nave) se abren solas al acercarte. Las misiones siguen el orden de una visita real: recepción → oficinas → seguridad (EPP) → almacén de materia prima → corte → tela y entubado → ensamble → pruebas → empaque y producto terminado → andenes → comparación de layouts → flujos → punto de reunión. Una flecha azul en el piso (calculada con A* para no atravesar muros ni máquinas) indica a dónde ir; se oculta con **G** o desde el menú. Los pasos y textos están en `public/data/recorrido.json`.
 
 ## Pasillos de montacargas
 
