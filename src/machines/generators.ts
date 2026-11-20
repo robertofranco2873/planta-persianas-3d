@@ -105,7 +105,7 @@ const mesaTela: Gen = (td, L, W, H, M, base) => {
       if (!on) return;
       gantry.position.x = tx + Math.sin(t * 0.6) * span;
       head.position.z = Math.sin(t * 1.7) * (W / 2 - 0.4);
-      roll.rotation.z += dt * 0.5;
+      roll.rotation.y += dt * 0.5;
     },
   };
 };
