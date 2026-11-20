@@ -20,7 +20,7 @@ const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r(null)))
 const CONTROLS: [string, string][] = [
   ['W A S D', 'Moverse'], ['Shift', 'Correr'], ['Mouse', 'Orbitar la cámara'], ['Rueda', 'Zoom'],
   ['E', 'Interactuar / ver'], ['G', 'Recorrido guiado: mostrar/ocultar misiones y flecha'], ['P', 'Primera / tercera persona'], ['L', 'Cambiar layout (actual ↔ propuesto)'], ['B', 'Mostrar/ocultar escenario B'],
-  ['F', 'Vista de flujos'], ['M', 'Mapa grande'], ['Tab', 'Libreta de descubrimientos'], ['V', 'Modo dron (Espacio/C subir/bajar)'],
+  ['F', 'Vista de flujos'], ['M', 'Mapa grande'], ['Tab', 'Libreta de descubrimientos'], ['V', 'Modo dron (Espacio/C subir/bajar, T quitar techo)'],
   ['H', 'Ayuda'], ['Esc', 'Menú'],
 ];
 const controlsHtml = () => CONTROLS.map(([k, v]) => `<div>${k.split(' ').map((x) => `<kbd>${x}</kbd>`).join(' ')}</div><div>${v}</div>`).join('');
@@ -83,6 +83,7 @@ async function main() {
 
   // ---------------- jugador
   const player = new Player(col, camera);
+  player.ceiling = (x, z) => building.ceilingAt(x, z);
   scene.add(player.ch.root);
   // afuera, en la banqueta del estacionamiento, mirando hacia la entrada principal (recepción)
   const ent = building.entrance;
@@ -315,9 +316,14 @@ async function main() {
         if (player.firstPerson) player.camPitch = 0.05; else player.camPitch = 0.35;
         toast(player.firstPerson ? 'Primera persona' : 'Tercera persona', '', 1.2);
         break;
+      case 'KeyT':
+        if (!player.drone) break;
+        building.roofOn = !building.roofOn;
+        toast(building.roofOn ? 'Techo visible' : 'Techo oculto', 'Vista del layout desde el dron', 1.4);
+        break;
       case 'KeyV':
         player.setDrone(!player.drone);
-        toast(player.drone ? 'Modo dron' : 'Modo a pie', player.drone ? 'WASD mover · Espacio/C subir/bajar · Shift rápido · V para volver' : '', 2);
+        toast(player.drone ? 'Modo dron' : 'Modo a pie', player.drone ? 'WASD mover · Espacio/C subir/bajar · T quitar techo · Shift rápido · V para volver' : '', 2);
         break;
     }
   });
@@ -327,7 +333,7 @@ async function main() {
   let frame = 0;
   let wasTrans = false;
   let fpsAcc = 0, fpsN = 0;
-  (window as any).__game = { guide, col, lm, player, camera, renderer, scene, props, disc, toggleLayout, setLayout: (l: any) => lm.setLayout(l), enterGame, data, interact, stats: () => renderer.info.render };
+  (window as any).__game = { building, guide, col, lm, player, camera, renderer, scene, props, disc, toggleLayout, setLayout: (l: any) => lm.setLayout(l), enterGame, data, interact, stats: () => renderer.info.render };
 
   const loop = () => {
     requestAnimationFrame(loop);

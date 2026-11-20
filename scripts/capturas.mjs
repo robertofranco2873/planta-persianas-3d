@@ -30,6 +30,7 @@ for (const layout of ['actual', 'propuesto']) {
     if (only && !s.name.includes(only)) continue;
     await page.evaluate((s) => {
       const g = window.__game, p = g.player;
+      g.building.roofOn = !s.drone;
       if (s.drone) { if (!p.drone) p.setDrone(true); p.dronePos.set(s.x, s.y, s.z); p.droneYaw = s.yaw; p.dronePitch = s.pitch; }
       else { if (p.drone) p.setDrone(false); p.pos.set(s.x, 0, s.z); p.camYaw = s.yaw; p.camPitch = s.pitch; p.camDist = s.dist; p.resolve(); }
     }, s);
@@ -40,7 +41,7 @@ for (const layout of ['actual', 'propuesto']) {
 // extras: flujos + escenario B, panel de máquina, NPC, libreta y mapa grande
 if (!only || only === 'extras') {
   const ev = (fn, arg) => page.evaluate(fn, arg);
-  await ev(() => { const g = window.__game; g.lm.setFlows(true); g.lm.toggleB(); const p = g.player; if (!p.drone) p.setDrone(true); p.dronePos.set(32, 30, 48); p.droneYaw = 0; p.dronePitch = -0.95; });
+  await ev(() => { const g = window.__game; g.building.roofOn = false; g.lm.setFlows(true); g.lm.toggleB(); const p = g.player; if (!p.drone) p.setDrone(true); p.dronePos.set(32, 30, 48); p.droneYaw = 0; p.dronePitch = -0.95; });
   await page.waitForFunction(() => !window.__game.lm.transitioning, null, { timeout: 60000 });
   await page.waitForTimeout(800);
   await page.screenshot({ path: `${out}/propuesto_flujos_B.png` });

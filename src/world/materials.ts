@@ -142,7 +142,7 @@ export function makeMaterials(T: Textures) {
     roof: new THREE.MeshStandardMaterial({ map: T.wall, color: '#b8bcc0', roughness: 0.6, metalness: 0.3, side: THREE.DoubleSide }),
     officeWall: std(PAL.blanco, 0.85),
     officeFloor: std('#d8d2c8', 0.6),
-    officeRoof: std('#e9e7e2', 0.9),
+    officeRoof: std('#e9e7e2', 0.9, 0, { side: THREE.DoubleSide }),
     grass: std('#6f7f4a', 1),
     metal: std('#c3c8cd', 0.35, 0.75),
     brushed: new THREE.MeshStandardMaterial({ map: brushed, color: '#d0d4d8', roughness: 0.35, metalness: 0.7 }),

@@ -21,7 +21,7 @@ Recorrido 3D de mundo abierto por la planta de persianas motorizadas de Apodaca,
 | F | Vista de flujos de material |
 | M | Mapa grande |
 | Tab | Libreta de descubrimientos |
-| V | Modo dron (Espacio/C para subir/bajar, Shift rápido) |
+| V | Modo dron (Espacio/C para subir/bajar, Shift rápido, T para quitar el techo y ver el layout) |
 | H | Ayuda |
 | Esc | Menú (pausa y calidad gráfica) |
 

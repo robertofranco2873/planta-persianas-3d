@@ -21,6 +21,8 @@ export class Player {
   dronePos = new THREE.Vector3();
   droneYaw = 0;
   dronePitch = -0.6;
+  /** techo sobre un punto (la cámara en tercera persona no lo atraviesa) */
+  ceiling: (x: number, z: number) => number = () => Infinity;
   bounds = { minX: -40, maxX: 120, minZ: -40, maxZ: 90 };
 
   constructor(private col: Collision, private camera: THREE.PerspectiveCamera) {}
@@ -118,7 +120,9 @@ export class Player {
     }
     const target = new THREE.Vector3(this.pos.x, 1.55, this.pos.z);
     const dir = new THREE.Vector3(Math.sin(this.camYaw) * Math.cos(this.camPitch), Math.sin(this.camPitch), Math.cos(this.camYaw) * Math.cos(this.camPitch));
-    const free = this.col.rayDistance(target, dir, this.camDist);
+    let free = this.col.rayDistance(target, dir, this.camDist);
+    const ceil = Math.min(this.ceiling(this.pos.x, this.pos.z), this.ceiling(target.x + dir.x * free, target.z + dir.z * free));
+    if (ceil < Infinity && dir.y > 0.01) free = Math.min(free, Math.max(0.6, (ceil - target.y) / dir.y));
     const dist = Math.max(0.6, free - 0.25);
     // acercar de inmediato, alejar suavemente
     this.camDistSmooth = dist < this.camDistSmooth ? dist : this.camDistSmooth + (dist - this.camDistSmooth) * Math.min(1, dt * 4);

@@ -12,6 +12,8 @@ export interface Building {
   group: THREE.Group;
   update(player: THREE.Vector3, cam: THREE.Vector3, drone: boolean, dt?: number): void;
   entrance: { x: number; z: number };
+  roofOn: boolean;
+  ceilingAt(x: number, z: number): number;
   insideNave(p: THREE.Vector3): boolean;
   insideAnnex(p: THREE.Vector3): boolean;
   annexRooms: Zona[];
@@ -192,6 +194,11 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
     g.setIndex(idx); g.computeVertexNormals();
     const rm = new THREE.Mesh(g, M.roof);
     roof.add(rm);
+    // plafón interior claro (iluminado por las lámparas) bajo la lámina
+    const ceilMat = new THREE.MeshStandardMaterial({ map: M.roof.map, color: '#d6d9dc', emissive: '#5a5e63', emissiveIntensity: 0.6, roughness: 0.8, metalness: 0.1, side: THREE.DoubleSide });
+    const ceil = new THREE.Mesh(g, ceilMat);
+    ceil.position.y = -0.12;
+    roof.add(ceil);
     // tímpanos (frentes del arco)
     const shape = new THREE.Shape();
     shape.moveTo(-half, 0);
@@ -314,6 +321,7 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
     roomDoors.comedor = [['W', co.z], ['E', co.z]];
   }
   const RH = 3.0;
+  const annexLights: [number, number][] = [];
   for (const r of annexRooms) {
     let rx0 = r.x - r.w / 2, rx1 = r.x + r.w / 2, rz0 = r.z - r.d / 2, rz1 = r.z + r.d / 2;
     const snapN = Math.abs(rz0 - z1) < 1.0; // comparte muro con la nave
@@ -342,6 +350,8 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
     group.add(fl);
     const rf = boxB(rx1 - rx0 + 0.2, 0.15, rz1 - rz0 + 0.2, M.officeRoof, (rx0 + rx1) / 2, RH, (rz0 + rz1) / 2);
     annexRoof.add(rf);
+    // plafones LED en el techo de cada sala
+    for (let x = rx0 + 1.6; x < rx1 - 0.8; x += 3.2) for (let z = rz0 + 1.4; z < rz1 - 0.6; z += 2.8) annexLights.push([x, z]);
     // letrero de la sala sobre la puerta principal
     const d0 = doors[0];
     if (d0) {
@@ -355,6 +365,12 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
       if (side === 'W') { s.position.set(rx0 - off, 2.6, along); s.rotation.y = -Math.PI / 2; }
       annexWalls.add(s);
     }
+  }
+  if (annexLights.length) {
+    const lm = new THREE.InstancedMesh(boxGeo(0.6, 0.03, 0.6), M.glow, annexLights.length);
+    const m4 = new THREE.Matrix4();
+    annexLights.forEach(([x, z], i) => lm.setMatrixAt(i, m4.makeTranslation(x, RH - 0.02, z)));
+    annexRoof.add(lm);
   }
   bake(annexWalls);
   group.add(annexWalls, annexRoof);
@@ -475,6 +491,14 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
   };
   return {
     group, annexRooms, insideNave, insideAnnex, entrance,
+    roofOn: true,
+    /** altura máxima de la cámara (bajo techo) en un punto */
+    ceilingAt(x: number, z: number) {
+      const p = new THREE.Vector3(x, 0, z);
+      if (insideNave(p)) return H - 1.3;
+      if (annexRooms.some((r) => Math.abs(x - r.x) < r.w / 2 && Math.abs(z - r.z) < r.d / 2) || (insideAnnex(p) && z < annexBox.max.z)) return RH - 0.25;
+      return Infinity;
+    },
     update(player, cam, drone, dt = 0.016) {
       // salidas de emergencia: se abren al acercarse desde dentro; desde fuera están cerradas
       const inside = insideNave(player);
@@ -485,9 +509,10 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
         d.hinge.rotation.y = d.baseRot + d.sign * -1 * d.open * 1.7;
       }
       const inN = insideNave(player) || insideNave(cam);
-      roof.visible = !(inN || drone);
-      annexRoof.visible = !(insideAnnex(player) || drone);
-      const active = inN || drone;
+      // techos siempre visibles; en modo dron se pueden quitar con T para ver el layout
+      roof.visible = this.roofOn || !drone;
+      annexRoof.visible = this.roofOn || !drone;
+      const active = drone ? !this.roofOn : inN;
       setSide('N', active && cam.z < z0);
       setSide('S', active && cam.z > z1);
       setSide('W', active && cam.x < x0);
