@@ -1,0 +1,90 @@
+[
+ {
+  "id": "gerente",
+  "nombre": "Gerente de planta",
+  "zona": "oficina_gerente",
+  "dialogo": [
+   "Bienvenido a la planta de persianas motorizadas en Apodaca.",
+   "Producimos persianas a la medida; cada una pasa por 12 operaciones.",
+   "Si quieres los números, revisa la terminal financiera de mi oficina: recuperamos la inversión en 1.83 años."
+  ]
+ },
+ {
+  "id": "supervisor",
+  "nombre": "Supervisor de línea",
+  "zona": "produccion",
+  "dialogo": [
+   "El ritmo de la línea es un takt de 93 segundos.",
+   "Nuestro cuello de botella son el corte de tela y el entubado.",
+   "Con el layout propuesto cada operador atiende varias máquinas y llegamos a 569 persianas por día en dos turnos."
+  ]
+ },
+ {
+  "id": "ing_procesos",
+  "nombre": "Ingeniero de procesos",
+  "zona": "mantenimiento",
+  "dialogo": [
+   "Con el estudio MOST medimos cuánto espera cada operador: en elevadores espera el 87% del ciclo.",
+   "Esa espera es capacidad oculta; por eso proponemos operadores multimáquina.",
+   "Cambia el layout con la palanca (tecla L) y mira cómo la ruta baja de 146 m a 108 m."
+  ]
+ },
+ {
+  "id": "inspector",
+  "nombre": "Inspectora de calidad",
+  "zona": "produccion",
+  "cerca_de": "elevador_1",
+  "dialogo": [
+   "En los elevadores programamos los límites del motor y revisamos 19 puntos.",
+   "El material no conforme se etiqueta en rojo y va al área de hold."
+  ]
+ },
+ {
+  "id": "ehs",
+  "nombre": "Coordinador de seguridad e higiene",
+  "zona": "produccion",
+  "cerca_de": "estacion_ehs",
+  "dialogo": [
+   "Aquí nadie entra a sierras sin lentes y tapones.",
+   "Cada máquina tiene 1 metro libre alrededor para mantenimiento.",
+   "Si suena la alarma, sigue las flechas verdes al punto de reunión."
+  ]
+ },
+ {
+  "id": "tecnico",
+  "nombre": "Técnico de mantenimiento",
+  "zona": "compresores",
+  "dialogo": [
+   "El compresor de 50 HP alimenta 12 bajadas a 6–10 bar.",
+   "La Packsize necesita 10 bar; es la que más pide."
+  ]
+ },
+ {
+  "id": "montacarguista",
+  "nombre": "Montacarguista",
+  "zona": "pasillo_norte",
+  "dialogo": [
+   "Uso el pasillo norte y el central, de 4 metros, para girar con rollos y tubos.",
+   "Peatones por el pasillo verde, por favor."
+  ]
+ },
+ {
+  "id": "almacenista",
+  "nombre": "Auxiliar de almacén",
+  "zona": "almacen_mp",
+  "dialogo": [
+   "Pido tela cada 7 días y tubo cada 5.",
+   "En producto terminado caben 920 persianas: 4 días de producción."
+  ]
+ },
+ {
+  "id": "operador_sierra",
+  "nombre": "Operador de sierras",
+  "zona": "produccion",
+  "cerca_de": "sierra_tubo",
+  "dialogo": [
+   "Cada corte tarda 180 s, pero mi trabajo manual son 50 s.",
+   "Con un tope automático TigerStop bajaría a 12 s."
+  ]
+ }
+]

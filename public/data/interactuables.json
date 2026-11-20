@@ -1,0 +1,193 @@
+[
+ {
+  "id": "vitrina_producto",
+  "tipo": "exhibidor",
+  "zona": "recepcion",
+  "titulo": "El producto: PowerView Roller Shades",
+  "modelo": "Persiana enrollable motorizada en exhibición con control remoto en un pedestal",
+  "contenido": [
+   "Persiana enrollable con motor que se controla a distancia; la tela sube y baja verticalmente para controlar luz y privacidad.",
+   "Se fabrica a la medida: máximo 140 in de largo y 120 in de ancho; no se guarda inventario de producto terminado sin pedido.",
+   "Precio de venta $2,700; costo variable $1,911 (MP $1,700, empaque $95, consumibles $65, merma $51)."
+  ],
+  "interaccion": "Al presionar E la persiana de exhibición sube/baja."
+ },
+ {
+  "id": "placa_equipo",
+  "tipo": "placa",
+  "zona": "recepcion",
+  "titulo": "Equipo 4 · Diseño de Instalaciones",
+  "contenido": [
+   "Amanda Cayetano · Daniela Rodríguez · Daniela Anahí · Jessica Francisco · Diego Reyna · Roberto Guerrero · Andrick García · Rodrigo Gaona"
+  ]
+ },
+ {
+  "id": "mapa_ubicacion",
+  "tipo": "pantalla",
+  "zona": "recepcion",
+  "titulo": "¿Por qué Apodaca?",
+  "contenido": [
+   "Ponderación municipal (10 factores): Apodaca 8.70 · Escobedo 8.60 · Santa Catarina 7.66.",
+   "Ponderación estatal: Guanajuato 8.58 · Querétaro 8.36 · Puebla 8.30.",
+   "Método Delphi: 5 perfiles (procesos, logística, seguridad, finanzas, calidad) en 3 rondas; consenso 100% en ponderaciones.",
+   "Centroide municipal en Monterrey cerca de San Nicolás; estatal en el este de Guanajuato. Los proveedores pesan ~64% del volumen.",
+   "Nave en renta: 4,400 m², $550,000/mes, altura libre 11 m, transformador de 1,250 kVA.",
+   "Plan Municipal 2024-2027: rehabilitación de la carretera Mezquital–Santa Rosa (hasta $165 M), justo donde está la nave.",
+   "Ley de Fomento a la Inversión NL: subsidio de ISN hasta 5 años, reembolso de capacitación, primer empleo 100% ISN por 24 meses."
+  ],
+  "visual": "mapa estilizado de Nuevo León con pin en Apodaca"
+ },
+ {
+  "id": "terminal_finanzas",
+  "tipo": "pantalla",
+  "zona": "oficina_gerente",
+  "titulo": "Análisis financiero",
+  "fuente": "kpis.finanzas",
+  "contenido": [
+   "Inversión inicial $29.29 M (activos $17.6 M + contingencia + capital de trabajo).",
+   "Ventas año 1 $165.1 M · utilidad neta $13.2 M · margen neto 8.02%.",
+   "VPN (16%) $61.99 M · TIR 57.92% · ROI 10 años 594% · recuperación 1.83 años.",
+   "Punto de equilibrio: 34,523 persianas al año."
+  ],
+  "grafica": "barras de inversión por grupo y línea de flujo acumulado"
+ },
+ {
+  "id": "sala_juntas",
+  "tipo": "pantalla",
+  "zona": "oficinas",
+  "titulo": "Etapa 3: cómo llegar a 500 persianas por día",
+  "fuente": "kpis.etapa3",
+  "contenido": [
+   "Capacidad actual 286/día vs demanda 500: déficit de 214 (cobertura 57.2%).",
+   "Escenario A (2º turno, sin máquinas): inversión $4.69 M, recupera en el mes 4, ROI 12 meses 7.5x.",
+   "Escenario B (1 turno + 6 máquinas): inversión $8.84 M, recupera en el mes 8, ROI 2.8x.",
+   "Recomendación: escenario A; dentro de 36 meses acumula más beneficio (VPN $93.1 M vs $85.2 M)."
+  ],
+  "grafica": "comparativo A vs B"
+ },
+ {
+  "id": "tablero_produccion",
+  "tipo": "tablero_kpi",
+  "zona": "produccion",
+  "titulo": "Tablero de producción",
+  "fuente": "layout.kpis",
+  "dinamico": true,
+  "contenido": [
+   "Muestra capacidad/día, takt, turnos, operadores por turno, recorrido por persiana, traslado más largo y productividad del layout activo, con contador animado al cambiar de layout."
+  ]
+ },
+ {
+  "id": "tablero_balanceo",
+  "tipo": "tablero_kpi",
+  "zona": "produccion",
+  "titulo": "Balanceo de línea",
+  "fuente": "kpis.generales",
+  "contenido": [
+   "Takt 93 s (incluye OEE 80.4%).",
+   "Eficiencia de balanceo 77.7%; cuello de botella corte de tela y entubado.",
+   "Capacidad real 5,693 persianas/mes vs demanda 5,520 (margen 3.1%).",
+   "Si el OEE baja de 78% hay que operar la tercera entubadora y la tercera mesa."
+  ],
+  "grafica": "barras de utilización por operación"
+ },
+ {
+  "id": "pantalla_simulacion",
+  "tipo": "pantalla",
+  "zona": "mantenimiento",
+  "titulo": "Simulación: Siemens vs FlexSim",
+  "fuente": "kpis.simulacion",
+  "contenido": [
+   "Siemens Plant Simulation: 336 persianas por turno. FlexSim: 342.",
+   "Mismo tiempo de flujo: 1,372 s (~23 min) por persiana.",
+   "Ambos modelos coinciden en el cuello de botella: corte de tela y entubado."
+  ]
+ },
+ {
+  "id": "estacion_ehs",
+  "tipo": "estacion",
+  "zona": "produccion",
+  "titulo": "Estación de seguridad (EHS)",
+  "contenido": [
+   "Normas: NOM-001, 002, 004, 006, 017, 018, 026, 027 y 030-STPS.",
+   "EPP por área: botas con casquillo, lentes, tapones en sierras, guantes, chaleco reflejante.",
+   "Costo de EPP: $27,320 (8 artículos).",
+   "Equipo: extintores, botiquín, alarma, paros de emergencia, LOTO, kit de derrames, lavaojos, marcaje de piso."
+  ],
+  "interaccion": "Al tomar el chaleco/casco el personaje se lo pone (cosmético)."
+ },
+ {
+  "id": "punto_reunion",
+  "tipo": "senal",
+  "zona": "exterior",
+  "titulo": "Punto de reunión",
+  "contenido": [
+   "Rutas de evacuación hacia 3 puntos de reunión exteriores. Al presionar E se muestran en el piso las flechas verdes de evacuación desde donde estás."
+  ]
+ },
+ {
+  "id": "area_residuos",
+  "tipo": "estacion",
+  "zona": "residuos",
+  "titulo": "Manejo de residuos",
+  "contenido": [
+   "7 tipos: metal, textil, plástico, cartón, eléctrico/electrónico, peligroso y general.",
+   "Cada uno tiene contenedor en su punto de generación y sale sin cruzar la línea.",
+   "Los peligrosos (aceites, trapos, condensado) van en contenedores cerrados a un gestor autorizado."
+  ],
+  "visual": "contenedores de 7 colores con etiqueta"
+ },
+ {
+  "id": "almacenes_info",
+  "tipo": "senal",
+  "zona": "almacen_mp",
+  "titulo": "Materia prima",
+  "contenido": [
+   "Tela (Telas García), tubo de aluminio (Aluminio Monterrey), perfiles, motor y mecanismo (Motores Escobedo), componentes y empaque.",
+   "Manejo de materiales: montacargas en pasillos de 4 m, patines, racks, carritos de 0.7 m en pasillos de 1 m, charolas y gavetas por kanban."
+  ]
+ },
+ {
+  "id": "tablero_rh",
+  "tipo": "tablero_kpi",
+  "zona": "comedor",
+  "titulo": "Personal y arranque",
+  "fuente": "kpis.curva_arranque",
+  "contenido": [
+   "35 personas: 18 directos y 17 indirectos.",
+   "Curva de arranque de 10 semanas: del 12% al 100%; se dejan de producir 4,512 persianas (3.3 semanas).",
+   "Productividad: 7.9 persianas por persona al día; 15.3 por operador."
+  ],
+  "grafica": "curva de arranque"
+ },
+ {
+  "id": "rack_iot",
+  "tipo": "maquina_ref",
+  "ref": "servidor_iot",
+  "titulo": "Planta conectada",
+  "contenido": [
+   "Monitoreo IoT de 3 sierras, mesas, entubadoras, pre-ensamble, 8 elevadores y empaque.",
+   "Trazabilidad por persiana: cliente → SAP → orden → kit → producción → calidad → empaque → embarque.",
+   "Ciberseguridad IT/OT: firewall, DMZ, VLAN, MFA, EDR, respaldos y SIEM."
+  ]
+ },
+ {
+  "id": "dron_flujos",
+  "tipo": "habilidad",
+  "titulo": "Vista de flujos",
+  "contenido": [
+   "Tecla F: muestra sobre el piso las rutas de tubo (negro), tela (azul), perfiles (amarillo) y persiana (rojo) del layout activo, con la distancia total."
+  ]
+ },
+ {
+  "id": "justificacion",
+  "tipo": "pantalla",
+  "zona": "oficinas",
+  "titulo": "Justificación de la distribución",
+  "contenido": [
+   "Línea en el orden del proceso, en un solo sentido.",
+   "MP al inicio, WIP junto a ensamble, PT junto a andenes.",
+   "Andenes en un solo frente lejos del personal; pasillos de 1 m (carritos) y 4 m (montacargas).",
+   "Subestación y compresor junto a las cargas mayores; mantenimiento y calidad junto a producción; oficinas separadas del flujo."
+  ]
+ }
+]

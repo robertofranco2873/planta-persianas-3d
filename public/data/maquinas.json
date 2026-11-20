@@ -1,0 +1,389 @@
+{
+ "_nota": "Catálogo por TIPO de máquina. Dimensiones en metros (largo x, ancho z, alto y). 'mtto' = franja libre de mantenimiento alrededor (1 m por lado). Los textos son los que mostrará la ficha al interactuar.",
+ "sierra": {
+  "nombre": "Sierra de corte de aluminio",
+  "dim": [
+   8,
+   1.5,
+   1.5
+  ],
+  "mtto": 1,
+  "color": "#9AA3AB",
+  "modelo": "Bancada larga con mesa de rodillos a ambos lados, cabezal de disco con guarda roja y tope de medida.",
+  "descripcion": "Corta a la medida de cada pedido el tubo, el bottom rail y el cassette. Hay una sierra por perfil.",
+  "specs": {
+   "Potencia": "3.0 kW por sierra",
+   "Alimentación": "220–240 V, 60 Hz",
+   "Aire comprimido": "6–8 bar",
+   "Capacidad": "20 cortes/h (ficha) · 60 pz/h en balanceo",
+   "Costo": "$175,000 c/u",
+   "Depreciación": "$52,500/año las tres"
+  },
+  "most": {
+   "ciclo_s": 180,
+   "manual_s": 50.04,
+   "maquina_s": 129.96,
+   "espera_operador": "72%"
+  },
+  "riesgos": [
+   "Cortes y rebabas",
+   "Ruido",
+   "Partículas proyectadas"
+  ],
+  "epp": [
+   "Lentes de seguridad",
+   "Tapones auditivos",
+   "Guantes anticorte",
+   "Botas con casquillo"
+  ],
+  "residuos": "Viruta, rebaba y recortes de aluminio → contenedor metálico, reciclaje",
+  "mejora_etapa3": "M1 Tope/empujador automático TigerStop: el trabajo manual baja de 50 s a ~12 s ($577 mil, requerida en escenario B)."
+ },
+ "mesa_tela": {
+  "nombre": "Mesa automática de corte textil",
+  "dim": [
+   4.83,
+   4.27,
+   1.0
+  ],
+  "mtto": 1,
+  "color": "#C9CED3",
+  "modelo": "Mesa grande con cubierta de vidrio retroiluminado, pórtico (gantry) móvil y desenrollador motorizado de rollo de tela en un extremo.",
+  "descripcion": "Inspección a contraluz, alineación y corte automático de la tela con pórtico móvil.",
+  "specs": {
+   "Superficie": "Vidrio templado con retroiluminación",
+   "Alimentación": "Desenrollador motorizado para rollos industriales",
+   "Aire comprimido": "8 bar",
+   "Capacidad": "20 pz/h",
+   "Costo": "$850,000 c/u"
+  },
+  "most": {
+   "ciclo_s": 180,
+   "manual_s": 54,
+   "maquina_s": 126,
+   "espera_operador": "70%"
+  },
+  "riesgos": [
+   "Atrapamiento con el pórtico",
+   "Cortes"
+  ],
+  "epp": [
+   "Cabello recogido",
+   "Ropa ajustada",
+   "Calzado cerrado"
+  ],
+  "residuos": "Recortes y sobrantes de tela → contenedor textil, reutilización",
+  "cuello_botella": true,
+  "mejora_etapa3": "M2 Corte programado desde la orden: −24 s de trabajo manual ($80 mil)."
+ },
+ "entubadora": {
+  "nombre": "Entubadora textil",
+  "dim": [
+   4.66,
+   0.6,
+   1.0
+  ],
+  "mtto": 1,
+  "color": "#8E7B6D",
+  "modelo": "Mesa angosta y larga con rodillos de alineación, eje giratorio para el tubo y dispensador de adhesivo.",
+  "descripcion": "Alinea y fija la tela al tubo de aluminio enrollándola y aplicando adhesivo; la tela se sujeta con vacío.",
+  "specs": {
+   "Potencia": "1 kW",
+   "Alimentación": "110 V",
+   "Aire comprimido": "6 bar, 6 CFM (bomba de vacío)",
+   "Capacidad": "20 persianas/h",
+   "Costo": "$340,000 c/u"
+  },
+  "most": {
+   "ciclo_s": 180,
+   "manual_s": 31.68,
+   "maquina_s": 148.32,
+   "espera_operador": "82%"
+  },
+  "riesgos": [
+   "Atrapamiento en rodillos",
+   "Vapores de adhesivo"
+  ],
+  "epp": [
+   "Guantes",
+   "Lentes"
+  ],
+  "residuos": "Tela y adhesivo → contenedores etiquetados",
+  "cuello_botella": true
+ },
+ "kit_ace": {
+  "nombre": "Estación Kit Ace",
+  "dim": [
+   2.4,
+   0.9,
+   1.0
+  ],
+  "mtto": 0.5,
+  "color": "#B8A99A",
+  "modelo": "Mesa de trabajo con anaqueles de gavetas de colores al frente, lector de código de barras, laptop e impresora de etiquetas.",
+  "descripcion": "Prepara el kit de 9 componentes y tornillería de cada pedido.",
+  "specs": {
+   "Equipo": "Anaqueles, gavetas, lector de códigos, laptop, etiquetadora"
+  },
+  "most": {
+   "ciclo_s": 60,
+   "nota": "incluye 5.64 s de espera de la etiqueta"
+  },
+  "mejora_etapa3": "M3 Pick-to-light: −16 s ($150 mil)."
+ },
+ "pre_ensamble": {
+  "nombre": "Pre-ensamble (fixture de resorte)",
+  "dim": [
+   1.5,
+   0.45,
+   1.0
+  ],
+  "mtto": 0.5,
+  "color": "#B8A99A",
+  "modelo": "Mesa de trabajo con un fixture mecánico de manivela y contador de vueltas.",
+  "descripcion": "Coloca el resorte y le da tensión con 20 vueltas de manivela.",
+  "specs": {
+   "Tipo": "Fixture mecánico manual con contador",
+   "Capacidad": "66 pz/h"
+  },
+  "most": {
+   "ciclo_s": 54
+  },
+  "mejora_etapa3": "M4 Enrollador motorizado del resorte: −10 s ($60 mil)."
+ },
+ "ens_cassette": {
+  "nombre": "Ensamble de cassette",
+  "dim": [
+   2.5,
+   0.9,
+   1.0
+  ],
+  "mtto": 0.5,
+  "color": "#B8A99A",
+  "modelo": "Mesa de ensamble con atornillador eléctrico colgante y prensas.",
+  "descripcion": "Introduce la persiana en el cassette, coloca 2 placas, 6 tornillos y las tapas; inspección de 9 puntos.",
+  "most": {
+   "ciclo_s": 78
+  },
+  "mejora_etapa3": "M5 Atornillador con alimentación automática FIAM: −21 s ($120 mil)."
+ },
+ "ens_bottom": {
+  "nombre": "Ensamble de bottom rail (máquina de costura)",
+  "dim": [
+   2.5,
+   0.9,
+   1.0
+  ],
+  "mtto": 0.5,
+  "color": "#B8A99A",
+  "modelo": "Mesa de ensamble con máquina de coser industrial blanca de pedal.",
+  "descripcion": "Cose el bolsillo inferior de la tela, inserta el riel y coloca tapas, tope y seguro.",
+  "specs": {
+   "Máquina de costura": "Alimentación por unísono (aguja + pie caminante), 220–240 V, 550 VA, 45–46 pz/h"
+  },
+  "most": {
+   "ciclo_s": 78,
+   "nota": "incluye 40.2 s de costura"
+  },
+  "riesgos": [
+   "Punzocortantes (agujas)"
+  ],
+  "residuos": "Agujas usadas → contenedor rígido"
+ },
+ "elevador": {
+  "nombre": "Elevador de prueba e inspección",
+  "dim": [
+   4.4,
+   2.6,
+   3.0
+  ],
+  "mtto": 1,
+  "color": "#5E6670",
+  "modelo": "Marco metálico alto con un tubo horizontal donde se cuelga la persiana desenrollada, iluminación LED superior y una tablet en un brazo.",
+  "descripcion": "Levanta y sostiene la persiana para programar los límites del motor (tablet) e inspeccionar 19 puntos. Hay 8 instalados; el balanceo usa 6 y 2 quedan de holgura.",
+  "specs": {
+   "Alimentación": "220–240 V AC",
+   "Iluminación": "100–200 W LED",
+   "Capacidad": "10 u/h (ficha)",
+   "Instalados": "8",
+   "Costo": "$1.5 M el grupo"
+  },
+  "most": {
+   "ciclo_s": 360,
+   "manual_s": 47.16,
+   "maquina_s": 312.84,
+   "espera_operador": "87%"
+  },
+  "animacion": "la persiana sube y baja lentamente"
+ },
+ "hardware": {
+  "nombre": "Hardware y accesorios",
+  "dim": [
+   2.4,
+   0.9,
+   1.0
+  ],
+  "mtto": 0.5,
+  "color": "#B8A99A",
+  "modelo": "Mesa con charolas y gavetas.",
+  "descripcion": "Arma el paquete de instalación (5 artículos). El mismo operador absorbe el empaque (carga 0.81 + 0.08 = 0.89).",
+  "most": {
+   "ciclo_s": 75,
+   "nota": "incluye 41.88 s de espera a que salga la persiana de elevadores"
+  },
+  "mejora_etapa3": "M6 Kanban de accesorios sincronizado: elimina ~42 s de espera (sin costo)."
+ },
+ "packsize": {
+  "nombre": "Packsize EM7-35",
+  "dim": [
+   8,
+   2.5,
+   2.2
+  ],
+  "mtto": 1,
+  "color": "#3C4A5A",
+  "modelo": "Máquina larga gris oscuro con rack de 5 bobinas de cartón corrugado detrás que alimentan la máquina; sale una caja por el frente.",
+  "descripcion": "Fabrica cajas de cartón corrugado a la medida de cada persiana (on demand).",
+  "specs": {
+   "Capacidad": "500 cajas/h (7.2 s/caja)",
+   "Alimentación": "480 V trifásica, 20 A",
+   "Aire": "6–10 bar",
+   "Peso": "2,495 kg + 200 kg rack",
+   "Costo": "$2.7 M"
+  },
+  "mejora_etapa3": "M7 Fabricar la caja durante el ciclo anterior: −7 s (sin costo)."
+ },
+ "flejadora": {
+  "nombre": "Flejadora industrial",
+  "dim": [
+   1.6,
+   0.9,
+   1.5
+  ],
+  "mtto": 0.5,
+  "color": "#D9D9D9",
+  "modelo": "Arco de flejado sobre mesa con rodillos.",
+  "descripcion": "Asegura la caja con fleje plástico. Hay 2.",
+  "specs": {
+   "Capacidad": "1,920 cajas/h",
+   "Potencia": "0.75 kW, 220 V"
+  }
+ },
+ "compresor": {
+  "nombre": "Compresor de tornillo rotativo",
+  "dim": [
+   2,
+   1.2,
+   1.8
+  ],
+  "color": "#2E75B6",
+  "modelo": "Gabinete azul con tanque vertical de 1,000 L y secador refrigerativo a un lado.",
+  "descripcion": "Alimenta 12 bajadas neumáticas; demanda 96 CFM + 35% de reserva = 129.6 CFM.",
+  "specs": {
+   "Potencia": "50 HP",
+   "Presión": "11–12 bar",
+   "Tanque": "1,000 L",
+   "Secador": "150 CFM"
+  }
+ },
+ "tablero_electrico": {
+  "nombre": "Subestación y tablero principal",
+  "dim": [
+   3,
+   1,
+   2.2
+  ],
+  "color": "#7F8C8D",
+  "modelo": "Gabinetes grises con señal de riesgo eléctrico.",
+  "descripcion": "Demanda 147.6 kW + 35% de reserva = 221.4 kVA; transformador trifásico de 225 kVA, 480/277 V y secundario 220/127 V. El edificio ya trae uno de 1,250 kVA."
+ },
+ "rack_tubo": {
+  "nombre": "Rack de tubo de aluminio",
+  "dim": [
+   11,
+   2.9,
+   3
+  ],
+  "color": "#D35400",
+  "modelo": "Rack cantiléver naranja con tubos largos.",
+  "descripcion": "Tarima de 300 tubos (rinde 1,800 persianas); almacén de 4 tarimas (1,200 tubos); punto de reorden 303 tubos; pedido cada 5 días. Proveedor: Aluminio Monterrey."
+ },
+ "rack_perfiles": {
+  "nombre": "Rack de perfiles",
+  "dim": [
+   4.4,
+   4.4,
+   2.5
+  ],
+  "color": "#D35400",
+  "modelo": "Rack cantiléver con perfiles de aluminio.",
+  "descripcion": "Bottom rail y cassette; se cortan en las mismas sierras."
+ },
+ "rack_tela": {
+  "nombre": "Almacén de rollos de tela",
+  "dim": [
+   10,
+   2.7,
+   3
+  ],
+  "color": "#D35400",
+  "modelo": "Rack selectivo con tarimas de rollos de tela de colores neutros.",
+  "descripcion": "Tarima de 32 rollos (rinde 3,200 persianas); almacén de 3 tarimas (96 rollos); reorden a 35 rollos; pedido cada 7 días. Proveedor: Telas García."
+ },
+ "rack_wip": {
+  "nombre": "Almacén de producto en proceso (WIP)",
+  "dim": [
+   23,
+   3.4,
+   3
+  ],
+  "color": "#D35400",
+  "modelo": "Fila de racks selectivos con cajas y carritos.",
+  "descripcion": "Capacidad de 300 persianas (~1.3 días). Junto a ensamble para absorber diferencias de ritmo."
+ },
+ "rack_pt": {
+  "nombre": "Almacén de producto terminado",
+  "dim": [
+   5.4,
+   2.7,
+   3
+  ],
+  "color": "#D35400",
+  "modelo": "Rack selectivo con cajas de cartón café.",
+  "descripcion": "920 persianas = 4 días de producción. Amortiguamiento antes del embarque."
+ },
+ "montacargas": {
+  "nombre": "Montacargas",
+  "dim": [
+   2.5,
+   1.2,
+   2.2
+  ],
+  "color": "#F1C40F",
+  "modelo": "Montacargas amarillo (asset CC0).",
+  "descripcion": "Descarga tarimas en andenes y surte almacén de MP y corte por los pasillos de 4 m. Inversión $750,000, vida útil 8 años.",
+  "animacion": "recorre en bucle el pasillo norte y el pasillo central"
+ },
+ "rack_it": {
+  "nombre": "Rack de red / gateway IoT",
+  "dim": [
+   0.8,
+   0.8,
+   2
+  ],
+  "color": "#2B2C30",
+  "modelo": "Gabinete negro con luces LED parpadeando.",
+  "descripcion": "Sensores → Gateway IoT → Red industrial → Base de datos → Databricks → Power BI; SAP como sistema de registro."
+ },
+ "mesa_calidad": {
+  "nombre": "Mesa de calidad",
+  "dim": [
+   2,
+   0.9,
+   1
+  ],
+  "color": "#B8A99A",
+  "modelo": "Mesa con flexómetro, vernier, carpeta de hojas de inspección y etiquetas rojas de no conforme.",
+  "descripcion": "Medición con flexómetro y vernier; hojas de instrucción, planes de inspección, checklists y auditorías; material no conforme: detectar, etiquetar, segregar, evaluar y registrar."
+ }
+}

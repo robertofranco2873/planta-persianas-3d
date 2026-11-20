@@ -1,0 +1,468 @@
+{
+ "id": "actual",
+ "nombre": "Layout actual",
+ "descripcion": "Distribución original de la Etapa 1–2: máquinas agrupadas por tipo. El flujo hace una U, cruza la zona de pre-ensamble y el traslado más largo (sierra de tubo → entubado) es de 33 m.",
+ "maquinas": [
+  {
+   "id": "rack_mp_tubo",
+   "tipo": "rack_tubo",
+   "x": 3.1,
+   "z": 18.6,
+   "rot": 90,
+   "largo": 11
+  },
+  {
+   "id": "rack_mp_perfiles",
+   "tipo": "rack_perfiles",
+   "x": 12.4,
+   "z": 21.6,
+   "rot": 0
+  },
+  {
+   "id": "rack_mp_tela",
+   "tipo": "rack_tela",
+   "x": 17.0,
+   "z": 33.3,
+   "rot": 0,
+   "largo": 10
+  },
+  {
+   "id": "racks_wip",
+   "tipo": "rack_wip",
+   "x": 24.5,
+   "z": 8.8,
+   "rot": 0,
+   "largo": 23
+  },
+  {
+   "id": "rack_pt",
+   "tipo": "rack_pt",
+   "x": 55.9,
+   "z": 21.1,
+   "rot": 90
+  },
+  {
+   "id": "elevador_1",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 8.5,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_2",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 11.6,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_3",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 14.8,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_4",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 17.9,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_5",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 21.0,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_6",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 24.1,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_7",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 27.3,
+   "rot": 0,
+   "en_operacion": false
+  },
+  {
+   "id": "elevador_8",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 30.4,
+   "rot": 0,
+   "en_operacion": false
+  },
+  {
+   "id": "hardware",
+   "tipo": "hardware",
+   "x": 51.0,
+   "z": 24.9,
+   "rot": 0
+  },
+  {
+   "id": "packsize",
+   "tipo": "packsize",
+   "x": 55.9,
+   "z": 29.5,
+   "rot": 90
+  },
+  {
+   "id": "flejadora_1",
+   "tipo": "flejadora",
+   "x": 58.1,
+   "z": 27.9,
+   "rot": 0
+  },
+  {
+   "id": "flejadora_2",
+   "tipo": "flejadora",
+   "x": 58.1,
+   "z": 30.6,
+   "rot": 0
+  },
+  {
+   "id": "compresor",
+   "tipo": "compresor",
+   "x": 13.0,
+   "z": 26.2,
+   "rot": 0
+  },
+  {
+   "id": "tablero_electrico",
+   "tipo": "tablero_electrico",
+   "x": 12.4,
+   "z": 12.6,
+   "rot": 0
+  },
+  {
+   "id": "montacargas",
+   "tipo": "montacargas",
+   "x": 29.3,
+   "z": 5.0,
+   "rot": 90
+  },
+  {
+   "id": "servidor_iot",
+   "tipo": "rack_it",
+   "x": 6.3,
+   "z": 28.9,
+   "rot": 0
+  },
+  {
+   "id": "mesa_calidad",
+   "tipo": "mesa_calidad",
+   "x": 8.3,
+   "z": 31.3,
+   "rot": 0
+  },
+  {
+   "id": "sierra_tubo",
+   "tipo": "sierra",
+   "nombre": "Sierra de tubo",
+   "x": 18.7,
+   "z": 12.4,
+   "rot": 0
+  },
+  {
+   "id": "sierra_cassette",
+   "tipo": "sierra",
+   "nombre": "Sierra de cassette",
+   "x": 18.7,
+   "z": 15.3,
+   "rot": 0
+  },
+  {
+   "id": "sierra_bottom",
+   "tipo": "sierra",
+   "nombre": "Sierra de bottom rail",
+   "x": 18.7,
+   "z": 18.6,
+   "rot": 0
+  },
+  {
+   "id": "mesa_tela_1",
+   "tipo": "mesa_tela",
+   "x": 26.4,
+   "z": 26.2,
+   "rot": 0
+  },
+  {
+   "id": "mesa_tela_2",
+   "tipo": "mesa_tela",
+   "x": 33.2,
+   "z": 26.2,
+   "rot": 0
+  },
+  {
+   "id": "entubadora_1",
+   "tipo": "entubadora",
+   "x": 38.7,
+   "z": 25.9,
+   "rot": 0
+  },
+  {
+   "id": "entubadora_2",
+   "tipo": "entubadora",
+   "x": 38.7,
+   "z": 28.2,
+   "rot": 0
+  },
+  {
+   "id": "kit_ace",
+   "tipo": "kit_ace",
+   "x": 31.5,
+   "z": 20.9,
+   "rot": 0
+  },
+  {
+   "id": "pre_ensamble",
+   "tipo": "pre_ensamble",
+   "x": 29.2,
+   "z": 18.2,
+   "rot": 0
+  },
+  {
+   "id": "ens_cassette",
+   "tipo": "ens_cassette",
+   "x": 30.1,
+   "z": 12.6,
+   "rot": 0
+  },
+  {
+   "id": "ens_bottom",
+   "tipo": "ens_bottom",
+   "x": 30.1,
+   "z": 15.3,
+   "rot": 0
+  }
+ ],
+ "flujos": [
+  {
+   "material": "tubo",
+   "color": "#2B2C30",
+   "puntos": [
+    [
+     2.9,
+     18.6
+    ],
+    [
+     19.5,
+     18.6
+    ],
+    [
+     19.5,
+     12.4
+    ],
+    [
+     38.0,
+     12.4
+    ],
+    [
+     38.0,
+     26.7
+    ]
+   ]
+  },
+  {
+   "material": "tela",
+   "color": "#2E75B6",
+   "puntos": [
+    [
+     17.0,
+     33.3
+    ],
+    [
+     29.7,
+     33.3
+    ],
+    [
+     29.7,
+     26.3
+    ],
+    [
+     38.0,
+     26.3
+    ]
+   ]
+  },
+  {
+   "material": "perfiles",
+   "color": "#E0A100",
+   "puntos": [
+    [
+     12.1,
+     20.1
+    ],
+    [
+     19.5,
+     20.1
+    ],
+    [
+     19.5,
+     15.3
+    ],
+    [
+     30.0,
+     15.2
+    ]
+   ]
+  },
+  {
+   "material": "perfiles",
+   "color": "#E0A100",
+   "puntos": [
+    [
+     19.5,
+     18.6
+    ],
+    [
+     29.0,
+     18.6
+    ],
+    [
+     30.0,
+     15.2
+    ]
+   ]
+  },
+  {
+   "material": "persiana",
+   "color": "#B0392E",
+   "puntos": [
+    [
+     38.0,
+     26.7
+    ],
+    [
+     30.7,
+     26.3
+    ],
+    [
+     30.7,
+     21.1
+    ],
+    [
+     29.0,
+     18.2
+    ],
+    [
+     30.0,
+     15.2
+    ],
+    [
+     30.0,
+     12.6
+    ],
+    [
+     32.0,
+     12.6
+    ],
+    [
+     32.0,
+     15.0
+    ],
+    [
+     46.2,
+     15.0
+    ],
+    [
+     46.2,
+     20.1
+    ],
+    [
+     51.0,
+     20.1
+    ],
+    [
+     51.0,
+     24.9
+    ],
+    [
+     55.9,
+     24.9
+    ],
+    [
+     55.9,
+     29.9
+    ],
+    [
+     55.9,
+     20.7
+    ],
+    [
+     61.9,
+     20.7
+    ],
+    [
+     61.9,
+     13.1
+    ]
+   ]
+  }
+ ],
+ "operadores": [
+  {
+   "x": 20.4,
+   "z": 12.4
+  },
+  {
+   "x": 20.4,
+   "z": 15.3
+  },
+  {
+   "x": 20.4,
+   "z": 18.6
+  },
+  {
+   "x": 27.6,
+   "z": 27.9
+  },
+  {
+   "x": 34.4,
+   "z": 27.9
+  },
+  {
+   "x": 38.7,
+   "z": 24.5
+  },
+  {
+   "x": 38.7,
+   "z": 29.6
+  },
+  {
+   "x": 31.5,
+   "z": 22.1
+  },
+  {
+   "x": 29.2,
+   "z": 19.4
+  },
+  {
+   "x": 30.1,
+   "z": 11.2
+  }
+ ],
+ "kpis": {
+  "capacidad_dia": 286,
+  "recorrido_por_persiana_m": 146,
+  "traslado_mas_largo_m": 33,
+  "operadores_por_turno": 10,
+  "turnos": 1,
+  "takt_s": 93,
+  "productividad_persianas_operador_dia": 15.3,
+  "cobertura_demanda_500": "57.2%"
+ }
+}

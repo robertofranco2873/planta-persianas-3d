@@ -1,0 +1,531 @@
+{
+ "id": "propuesto",
+ "nombre": "Layout propuesto (Etapa 3)",
+ "descripcion": "Flujo en línea con celda en U: sierras → tela → entubado → Kit Ace → ensambles → elevadores → empaque → andenes. Sólo se mueve maquinaria; el edificio no cambia. Operadores multimáquina (escenario A: 2 turnos, 9 operadores por turno). El equipo punteado sólo existe en el escenario B.",
+ "zona_reordenada": {
+  "x": 29.1,
+  "z": 20.5,
+  "w": 29.3,
+  "d": 19.2
+ },
+ "maquinas": [
+  {
+   "id": "rack_mp_tubo",
+   "tipo": "rack_tubo",
+   "x": 3.1,
+   "z": 18.6,
+   "rot": 90,
+   "largo": 11
+  },
+  {
+   "id": "rack_mp_perfiles",
+   "tipo": "rack_perfiles",
+   "x": 12.4,
+   "z": 21.6,
+   "rot": 0
+  },
+  {
+   "id": "rack_mp_tela",
+   "tipo": "rack_tela",
+   "x": 17.0,
+   "z": 33.3,
+   "rot": 0,
+   "largo": 10
+  },
+  {
+   "id": "racks_wip",
+   "tipo": "rack_wip",
+   "x": 24.5,
+   "z": 8.8,
+   "rot": 0,
+   "largo": 23
+  },
+  {
+   "id": "rack_pt",
+   "tipo": "rack_pt",
+   "x": 55.9,
+   "z": 21.1,
+   "rot": 90
+  },
+  {
+   "id": "elevador_1",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 8.5,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_2",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 11.6,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_3",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 14.8,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_4",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 17.9,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_5",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 21.0,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_6",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 24.1,
+   "rot": 0,
+   "en_operacion": true
+  },
+  {
+   "id": "elevador_7",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 27.3,
+   "rot": 0,
+   "en_operacion": false
+  },
+  {
+   "id": "elevador_8",
+   "tipo": "elevador",
+   "x": 46.2,
+   "z": 30.4,
+   "rot": 0,
+   "en_operacion": false
+  },
+  {
+   "id": "hardware",
+   "tipo": "hardware",
+   "x": 51.0,
+   "z": 24.9,
+   "rot": 0
+  },
+  {
+   "id": "packsize",
+   "tipo": "packsize",
+   "x": 55.9,
+   "z": 29.5,
+   "rot": 90
+  },
+  {
+   "id": "flejadora_1",
+   "tipo": "flejadora",
+   "x": 58.1,
+   "z": 27.9,
+   "rot": 0
+  },
+  {
+   "id": "flejadora_2",
+   "tipo": "flejadora",
+   "x": 58.1,
+   "z": 30.6,
+   "rot": 0
+  },
+  {
+   "id": "compresor",
+   "tipo": "compresor",
+   "x": 13.0,
+   "z": 26.2,
+   "rot": 0
+  },
+  {
+   "id": "tablero_electrico",
+   "tipo": "tablero_electrico",
+   "x": 12.4,
+   "z": 12.6,
+   "rot": 0
+  },
+  {
+   "id": "montacargas",
+   "tipo": "montacargas",
+   "x": 29.3,
+   "z": 5.0,
+   "rot": 90
+  },
+  {
+   "id": "servidor_iot",
+   "tipo": "rack_it",
+   "x": 6.3,
+   "z": 28.9,
+   "rot": 0
+  },
+  {
+   "id": "mesa_calidad",
+   "tipo": "mesa_calidad",
+   "x": 8.3,
+   "z": 31.3,
+   "rot": 0
+  },
+  {
+   "id": "sierra_cassette",
+   "tipo": "sierra",
+   "nombre": "Sierra de cassette",
+   "x": 19.2,
+   "z": 13.0,
+   "rot": 0
+  },
+  {
+   "id": "sierra_bottom",
+   "tipo": "sierra",
+   "nombre": "Sierra de bottom rail",
+   "x": 19.2,
+   "z": 15.4,
+   "rot": 0
+  },
+  {
+   "id": "sierra_tubo",
+   "tipo": "sierra",
+   "nombre": "Sierra de tubo",
+   "x": 19.2,
+   "z": 17.9,
+   "rot": 0
+  },
+  {
+   "id": "mesa_tela_1",
+   "tipo": "mesa_tela",
+   "x": 18.1,
+   "z": 27.0,
+   "rot": 0
+  },
+  {
+   "id": "mesa_tela_2",
+   "tipo": "mesa_tela",
+   "x": 23.2,
+   "z": 27.0,
+   "rot": 0
+  },
+  {
+   "id": "mesa_tela_3",
+   "tipo": "mesa_tela",
+   "x": 18.1,
+   "z": 22.1,
+   "rot": 0,
+   "solo_escenario_b": true
+  },
+  {
+   "id": "mesa_tela_4",
+   "tipo": "mesa_tela",
+   "x": 23.2,
+   "z": 22.1,
+   "rot": 0,
+   "solo_escenario_b": true
+  },
+  {
+   "id": "entubadora_1",
+   "tipo": "entubadora",
+   "x": 29.1,
+   "z": 26.0,
+   "rot": 0
+  },
+  {
+   "id": "entubadora_2",
+   "tipo": "entubadora",
+   "x": 29.1,
+   "z": 27.2,
+   "rot": 0
+  },
+  {
+   "id": "entubadora_3",
+   "tipo": "entubadora",
+   "x": 29.1,
+   "z": 23.6,
+   "rot": 0,
+   "solo_escenario_b": true
+  },
+  {
+   "id": "entubadora_4",
+   "tipo": "entubadora",
+   "x": 29.1,
+   "z": 24.8,
+   "rot": 0,
+   "solo_escenario_b": true
+  },
+  {
+   "id": "entubadora_respaldo",
+   "tipo": "entubadora",
+   "x": 29.1,
+   "z": 28.4,
+   "rot": 0,
+   "solo_escenario_b": true
+  },
+  {
+   "id": "kit_ace",
+   "tipo": "kit_ace",
+   "x": 34.8,
+   "z": 25.4,
+   "rot": 0
+  },
+  {
+   "id": "pre_ensamble",
+   "tipo": "pre_ensamble",
+   "x": 35.2,
+   "z": 21.8,
+   "rot": 0
+  },
+  {
+   "id": "ens_cassette",
+   "tipo": "ens_cassette",
+   "x": 36.3,
+   "z": 18.2,
+   "rot": 0
+  },
+  {
+   "id": "ens_cassette_2",
+   "tipo": "ens_cassette",
+   "x": 39.7,
+   "z": 18.2,
+   "rot": 0,
+   "solo_escenario_b": true
+  },
+  {
+   "id": "ens_bottom",
+   "tipo": "ens_bottom",
+   "x": 40.4,
+   "z": 21.8,
+   "rot": 0
+  },
+  {
+   "id": "ens_bottom_2",
+   "tipo": "ens_bottom",
+   "x": 40.4,
+   "z": 23.3,
+   "rot": 0,
+   "solo_escenario_b": true
+  }
+ ],
+ "flujos": [
+  {
+   "material": "tubo",
+   "color": "#2B2C30",
+   "puntos": [
+    [
+     2.9,
+     18.6
+    ],
+    [
+     23.3,
+     18.6
+    ],
+    [
+     29.1,
+     17.9
+    ],
+    [
+     29.1,
+     25.5
+    ]
+   ]
+  },
+  {
+   "material": "tela",
+   "color": "#2E75B6",
+   "puntos": [
+    [
+     18.8,
+     32.9
+    ],
+    [
+     20.6,
+     32.9
+    ],
+    [
+     20.6,
+     24.5
+    ],
+    [
+     29.1,
+     24.5
+    ],
+    [
+     29.1,
+     25.5
+    ]
+   ]
+  },
+  {
+   "material": "perfiles",
+   "color": "#E0A100",
+   "puntos": [
+    [
+     12.1,
+     19.5
+    ],
+    [
+     23.3,
+     19.5
+    ],
+    [
+     23.3,
+     13.0
+    ],
+    [
+     36.5,
+     13.0
+    ],
+    [
+     36.5,
+     17.7
+    ]
+   ]
+  },
+  {
+   "material": "perfiles",
+   "color": "#E0A100",
+   "puntos": [
+    [
+     23.3,
+     15.4
+    ],
+    [
+     40.4,
+     15.4
+    ],
+    [
+     40.4,
+     21.3
+    ]
+   ]
+  },
+  {
+   "material": "persiana",
+   "color": "#B0392E",
+   "puntos": [
+    [
+     29.1,
+     26.0
+    ],
+    [
+     34.8,
+     26.0
+    ],
+    [
+     35.2,
+     21.8
+    ],
+    [
+     36.3,
+     18.2
+    ],
+    [
+     40.4,
+     18.2
+    ],
+    [
+     40.4,
+     21.8
+    ],
+    [
+     46.2,
+     21.8
+    ],
+    [
+     46.2,
+     20.1
+    ],
+    [
+     51.0,
+     20.1
+    ],
+    [
+     51.0,
+     24.9
+    ],
+    [
+     55.9,
+     24.9
+    ],
+    [
+     55.9,
+     29.9
+    ],
+    [
+     55.9,
+     20.7
+    ],
+    [
+     61.9,
+     20.7
+    ],
+    [
+     61.9,
+     13.6
+    ]
+   ]
+  }
+ ],
+ "operadores": [
+  {
+   "x": 24.7,
+   "z": 16.1
+  },
+  {
+   "x": 32.0,
+   "z": 27.0
+  },
+  {
+   "x": 20.6,
+   "z": 29.8
+  },
+  {
+   "x": 32.8,
+   "z": 22.0
+  },
+  {
+   "x": 34.6,
+   "z": 16.8
+  },
+  {
+   "x": 42.3,
+   "z": 20.7
+  },
+  {
+   "x": 44.4,
+   "z": 15.1
+  },
+  {
+   "x": 44.4,
+   "z": 24.8
+  },
+  {
+   "x": 53.5,
+   "z": 27.0
+  }
+ ],
+ "kpis": {
+  "capacidad_dia": 569,
+  "recorrido_por_persiana_m": 108,
+  "traslado_mas_largo_m": 21,
+  "operadores_por_turno": 9,
+  "turnos": 2,
+  "takt_s": 102.5,
+  "productividad_persianas_operador_dia": 27.8,
+  "cobertura_demanda_500": "113.8%"
+ },
+ "escenario_b": {
+  "capacidad_dia": 541,
+  "turnos": 1,
+  "takt_s": 51.2,
+  "operadores": 13,
+  "maquinas_extra": 6,
+  "area_extra_m2": 75,
+  "productividad_persianas_operador_dia": 38.5
+ }
+}

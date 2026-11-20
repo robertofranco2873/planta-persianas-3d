@@ -1,0 +1,135 @@
+{
+ "generales": {
+  "demanda_base_dia": 276,
+  "demanda_promocion_dia": 500,
+  "horas_efectivas_turno": 8.85,
+  "turno": "6:00–15:36 (45 min de descanso)",
+  "oee": "80.4% (Q 92% × P 92% × A 95%)",
+  "takt_s": 93,
+  "eficiencia_balanceo": "77.7%",
+  "cuello_botella": "Corte de tela y entubado (90 s por pieza, 96.8%)",
+  "capacidad_real_mes": 5693,
+  "personal_total": 35,
+  "directos": 18,
+  "indirectos": 17
+ },
+ "simulacion": {
+  "siemens": {
+   "salida_turno": 336,
+   "flujo_s": 1372
+  },
+  "flexsim": {
+   "salida_turno": 342,
+   "flujo_s": 1372
+  },
+  "conclusion": "Ambas coinciden: la línea cumple la demanda y el cuello de botella es corte de tela y entubado; diferencia < 2%."
+ },
+ "finanzas": {
+  "inversion_inicial": 29290495,
+  "grupos": {
+   "Producción": 10530000,
+   "Instalaciones": 3620000,
+   "Logística": 1631000,
+   "Software": 980000,
+   "TI": 645000,
+   "Administración": 220000
+  },
+  "ventas_ano1": 165091500,
+  "utilidad_neta_ano1": 13233184.65,
+  "margen_neto_ano1": "8.02%",
+  "margen_ebitda_ano1": "13.93%",
+  "punto_equilibrio": "34,523 persianas/año",
+  "vpn_16": 61990062.55,
+  "tir": "57.92%",
+  "roi_10_anos": "594.11%",
+  "payback": "1.83 años",
+  "precio": 2700,
+  "costo_variable": 1911
+ },
+ "etapa3": {
+  "brecha": {
+   "capacidad_actual": 286,
+   "demanda": 500,
+   "deficit": 214,
+   "cobertura": "57.2%",
+   "incremento": "74.8%"
+  },
+  "escenario_a": {
+   "nombre": "2º turno sin comprar máquinas",
+   "inversion": "$4.69 M",
+   "beneficio_mensual": "$3.69 M",
+   "recuperacion": "mes 4",
+   "roi_12m": "7.5x",
+   "vpn_36m": "$93.1 M",
+   "capacidad": 569,
+   "costo_turno": "$365 mil/mes ($81 por persiana)"
+  },
+  "escenario_b": {
+   "nombre": "1 turno con 6 máquinas más",
+   "inversion": "$8.84 M",
+   "beneficio_mensual": "$4.03 M",
+   "recuperacion": "mes 8",
+   "roi_12m": "2.8x",
+   "vpn_36m": "$85.2 M",
+   "capacidad": 541,
+   "costo_turno": "$27 mil/mes"
+  },
+  "pronostico": {
+   "base": "pico 459/día, promedio año 1 397, sostiene 500 en 4.5 años",
+   "optimista": "pico 525/día, promedio año 1 449, sostiene 500 en 2.7 años"
+  }
+ },
+ "curva_arranque": [
+  [
+   1,
+   12,
+   385
+  ],
+  [
+   2,
+   25,
+   345
+  ],
+  [
+   3,
+   40,
+   552
+  ],
+  [
+   4,
+   57,
+   787
+  ],
+  [
+   5,
+   75,
+   1035
+  ],
+  [
+   6,
+   82,
+   1132
+  ],
+  [
+   7,
+   89,
+   1228
+  ],
+  [
+   8,
+   95,
+   1311
+  ],
+  [
+   9,
+   98,
+   1352
+  ],
+  [
+   10,
+   100,
+   1380
+  ]
+ ],
+ "_curva": "[semana, % producción, persianas/semana]"
+}

@@ -1,0 +1,372 @@
+{
+ "_nota": "Coordenadas en metros. Origen (0,0) = esquina noroeste del interior de la nave. X crece hacia el este, Z hacia el sur. Y es la altura. Medidas deducidas del plano del proyecto (escala aprox. 14.7 px/m); son aproximadas pero proporcionales a la realidad.",
+ "empresa": {
+  "nombre": "Planta de persianas motorizadas · Equipo 4",
+  "producto": "PowerView Roller Shades (persianas enrollables motorizadas a la medida)",
+  "ubicacion": "Mezquital–Santa Rosa 1000, El Mezquital, Apodaca, Nuevo León",
+  "edificio": "Nave industrial en renta: 4,400 m², altura libre 11 m, piso reforzado, transformador de 1,250 kVA, renta $550,000 MXN/mes",
+  "terreno_total_m2": 4254
+ },
+ "sitio": {
+  "ancho_x": 85,
+  "largo_z": 50,
+  "_nota": "El sitio va de x≈-6 a x≈85 y de z≈-2 a z≈50"
+ },
+ "nave": {
+  "x": 30.0,
+  "z": 17.4,
+  "w": 60.0,
+  "d": 34.7,
+  "altura": 11,
+  "muros": "lámina metálica gris claro con franja inferior de concreto 1.2 m; techo de arcotecho con lámparas LED industriales"
+ },
+ "zonas": [
+  {
+   "id": "pasillo_norte",
+   "nombre": "Pasillo de montacargas (4 m)",
+   "tipo": "pasillo_montacargas",
+   "x": 30.0,
+   "z": 5.0,
+   "w": 60.0,
+   "d": 3.7,
+   "piso": "concreto con franjas amarillas"
+  },
+  {
+   "id": "pasillo_central",
+   "nombre": "Pasillo principal (4 m)",
+   "tipo": "pasillo_montacargas",
+   "x": 43.0,
+   "z": 20.8,
+   "w": 2.1,
+   "d": 27.9
+  },
+  {
+   "id": "produccion",
+   "nombre": "Área de producción (2,100 m²)",
+   "tipo": "produccion",
+   "x": 34.6,
+   "z": 20.8,
+   "w": 49.4,
+   "d": 27.9,
+   "piso": "concreto pulido gris con pasillos peatonales verdes de 1 m"
+  },
+  {
+   "id": "almacen_mp",
+   "nombre": "Almacén de materia prima (66 m²)",
+   "tipo": "almacen",
+   "x": 3.2,
+   "z": 18.4,
+   "w": 4.5,
+   "d": 12.9
+  },
+  {
+   "id": "almacen_mp_tela",
+   "nombre": "Almacén de MP · tela",
+   "tipo": "almacen",
+   "x": 17.1,
+   "z": 33.3,
+   "w": 10.3,
+   "d": 3.0
+  },
+  {
+   "id": "almacen_pt",
+   "nombre": "Almacén de producto terminado (72 m²)",
+   "tipo": "almacen",
+   "x": 55.9,
+   "z": 21.1,
+   "w": 3.4,
+   "d": 5.4
+  },
+  {
+   "id": "empaque",
+   "nombre": "Línea de empaque",
+   "tipo": "produccion",
+   "x": 55.7,
+   "z": 29.3,
+   "w": 7.2,
+   "d": 6.8
+  },
+  {
+   "id": "residuos",
+   "nombre": "Área de residuos",
+   "tipo": "residuos",
+   "x": 55.9,
+   "z": 33.6,
+   "w": 6.2,
+   "d": 1.8
+  },
+  {
+   "id": "mantenimiento",
+   "nombre": "Mantenimiento, ingeniería y calidad (hold)",
+   "tipo": "servicio",
+   "x": 7.8,
+   "z": 30.1,
+   "w": 4.6,
+   "d": 4.4
+  },
+  {
+   "id": "cuarto_electrico",
+   "nombre": "Subestación y tablero principal",
+   "tipo": "servicio",
+   "x": 12.5,
+   "z": 12.6,
+   "w": 4.8,
+   "d": 3.8
+  },
+  {
+   "id": "compresores",
+   "nombre": "Cuarto de compresor",
+   "tipo": "servicio",
+   "x": 12.9,
+   "z": 26.2,
+   "w": 3.5,
+   "d": 2.8
+  },
+  {
+   "id": "oficinas",
+   "nombre": "Oficinas generales (240 m²)",
+   "tipo": "oficina",
+   "x": 11.2,
+   "z": 44.8,
+   "w": 22.5,
+   "d": 10.5
+  },
+  {
+   "id": "oficina_gerente",
+   "nombre": "Oficina del gerente",
+   "tipo": "oficina",
+   "x": 1.5,
+   "z": 37.2,
+   "w": 8.5,
+   "d": 4.5
+  },
+  {
+   "id": "recepcion",
+   "nombre": "Recepción (40 m²)",
+   "tipo": "oficina",
+   "x": 18.4,
+   "z": 37.5,
+   "w": 8.2,
+   "d": 4.1
+  },
+  {
+   "id": "banos",
+   "nombre": "Baños (72 m²)",
+   "tipo": "servicio",
+   "x": 10.1,
+   "z": 37.4,
+   "w": 8.5,
+   "d": 4.8
+  },
+  {
+   "id": "lockers",
+   "nombre": "Lockers (12 m²)",
+   "tipo": "servicio",
+   "x": 26.6,
+   "z": 37.0,
+   "w": 5.4,
+   "d": 4.1
+  },
+  {
+   "id": "comedor",
+   "nombre": "Comedor (60 m²)",
+   "tipo": "servicio",
+   "x": 27.3,
+   "z": 44.8,
+   "w": 6.8,
+   "d": 10.5
+  },
+  {
+   "id": "estacionamiento",
+   "nombre": "Estacionamiento (422 m²)",
+   "tipo": "exterior",
+   "x": 56.1,
+   "z": 43.2,
+   "w": 34.4,
+   "d": 13.6
+  },
+  {
+   "id": "patio",
+   "nombre": "Patio de tráileres (1,170 m²)",
+   "tipo": "exterior",
+   "x": 72.6,
+   "z": 18.2,
+   "w": 25.2,
+   "d": 36.4
+  },
+  {
+   "id": "vialidad",
+   "nombre": "Acceso de tráileres",
+   "tipo": "exterior",
+   "x": 79.8,
+   "z": 34.4,
+   "w": 10.9,
+   "d": 31.3
+  }
+ ],
+ "andenes": [
+  {
+   "id": "anden_este_1",
+   "nombre": "Andén de embarque 1",
+   "x": 60.0,
+   "z": 9.5,
+   "remolque": true
+  },
+  {
+   "id": "anden_este_2",
+   "nombre": "Andén de embarque 2",
+   "x": 60.0,
+   "z": 13.4,
+   "remolque": true
+  },
+  {
+   "id": "anden_este_3",
+   "nombre": "Andén de embarque 3",
+   "x": 60.0,
+   "z": 17.2,
+   "remolque": true
+  },
+  {
+   "id": "anden_norte_1",
+   "nombre": "Puerta de recibo de MP 1",
+   "x": 17.7,
+   "z": 0.0,
+   "remolque": false
+  },
+  {
+   "id": "anden_norte_2",
+   "nombre": "Puerta de recibo de MP 2",
+   "x": 26.6,
+   "z": 0.0,
+   "remolque": false
+  },
+  {
+   "id": "anden_norte_3",
+   "nombre": "Puerta de recibo de MP 3",
+   "x": 36.1,
+   "z": 0.0,
+   "remolque": false
+  },
+  {
+   "id": "anden_norte_4",
+   "nombre": "Puerta de recibo de MP 4",
+   "x": 45.3,
+   "z": 0.0,
+   "remolque": false
+  }
+ ],
+ "seguridad": {
+  "extintores": [
+   {
+    "x": 11.3,
+    "z": 7.3
+   },
+   {
+    "x": 39.7,
+    "z": 7.3
+   },
+   {
+    "x": 10.6,
+    "z": 34.2
+   },
+   {
+    "x": 38.2,
+    "z": 34.2
+   },
+   {
+    "x": 48.4,
+    "z": 34.2
+   },
+   {
+    "x": 57.8,
+    "z": 0.5
+   },
+   {
+    "x": 26.6,
+    "z": 20.7
+   },
+   {
+    "x": 49.8,
+    "z": 17.3
+   }
+  ],
+  "salidas_emergencia": [
+   {
+    "x": 12.3,
+    "z": 0.0
+   },
+   {
+    "x": 39.5,
+    "z": 0.0
+   },
+   {
+    "x": 0.0,
+    "z": 11.9
+   },
+   {
+    "x": 0.0,
+    "z": 27.2
+   },
+   {
+    "x": 20.4,
+    "z": 34.7
+   }
+  ],
+  "puntos_reunion": [
+   {
+    "x": 72.3,
+    "z": 3.4
+   },
+   {
+    "x": 67.8,
+    "z": 28.1
+   },
+   {
+    "x": 34.6,
+    "z": 42.9
+   }
+  ],
+  "botiquin": {
+   "x": 42.3,
+   "z": 32.3
+  },
+  "lavaojos": {
+   "x": 9.2,
+   "z": 28.9
+  },
+  "estacion_loto": {
+   "x": 6.8,
+   "z": 31.6
+  },
+  "kit_derrames": {
+   "x": 13.8,
+   "z": 27.9
+  }
+ },
+ "decoracion": {
+  "arboles": [
+   {
+    "x": 38.2,
+    "z": 35.7
+   },
+   {
+    "x": 45.3,
+    "z": 35.7
+   },
+   {
+    "x": 52.5,
+    "z": 35.7
+   },
+   {
+    "x": 59.6,
+    "z": 35.7
+   },
+   {
+    "x": 37.8,
+    "z": 39.5
+   }
+  ],
+  "lamparas_led": "rejilla cada 8 m a 10 m de altura",
+  "senaletica": "NOM-026-STPS: obligatoria azul, precaución amarilla, emergencia verde, prohibición roja"
+ }
+}

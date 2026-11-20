@@ -1,0 +1,1 @@
+Coloca aquí los modelos opcionales (personaje.glb, props de Kenney). Ver LEEME.md.
