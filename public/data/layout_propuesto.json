@@ -27,7 +27,7 @@
   {
    "id": "rack_mp_tela",
    "tipo": "rack_tela",
-   "x": 17.0,
+   "x": 17,
    "z": 33.3,
    "rot": 0,
    "largo": 10
@@ -50,71 +50,95 @@
   {
    "id": "elevador_1",
    "tipo": "elevador",
-   "x": 46.2,
+   "x": 47.3,
    "z": 8.5,
    "rot": 0,
-   "en_operacion": true
+   "en_operacion": true,
+   "x_plano": 46.2,
+   "z_plano": 8.5,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "elevador_2",
    "tipo": "elevador",
-   "x": 46.2,
+   "x": 47.3,
    "z": 11.6,
    "rot": 0,
-   "en_operacion": true
+   "en_operacion": true,
+   "x_plano": 46.2,
+   "z_plano": 11.6,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "elevador_3",
    "tipo": "elevador",
-   "x": 46.2,
+   "x": 47.3,
    "z": 14.8,
    "rot": 0,
-   "en_operacion": true
+   "en_operacion": true,
+   "x_plano": 46.2,
+   "z_plano": 14.8,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "elevador_4",
    "tipo": "elevador",
-   "x": 46.2,
+   "x": 47.3,
    "z": 17.9,
    "rot": 0,
-   "en_operacion": true
+   "en_operacion": true,
+   "x_plano": 46.2,
+   "z_plano": 17.9,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "elevador_5",
    "tipo": "elevador",
-   "x": 46.2,
-   "z": 21.0,
+   "x": 47.3,
+   "z": 21,
    "rot": 0,
-   "en_operacion": true
+   "en_operacion": true,
+   "x_plano": 46.2,
+   "z_plano": 21,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "elevador_6",
    "tipo": "elevador",
-   "x": 46.2,
+   "x": 47.3,
    "z": 24.1,
    "rot": 0,
-   "en_operacion": true
+   "en_operacion": true,
+   "x_plano": 46.2,
+   "z_plano": 24.1,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "elevador_7",
    "tipo": "elevador",
-   "x": 46.2,
+   "x": 47.3,
    "z": 27.3,
    "rot": 0,
-   "en_operacion": false
+   "en_operacion": false,
+   "x_plano": 46.2,
+   "z_plano": 27.3,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "elevador_8",
    "tipo": "elevador",
-   "x": 46.2,
+   "x": 47.3,
    "z": 30.4,
    "rot": 0,
-   "en_operacion": false
+   "en_operacion": false,
+   "x_plano": 46.2,
+   "z_plano": 30.4,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "hardware",
    "tipo": "hardware",
-   "x": 51.0,
+   "x": 51,
    "z": 24.9,
    "rot": 0
   },
@@ -142,7 +166,7 @@
   {
    "id": "compresor",
    "tipo": "compresor",
-   "x": 13.0,
+   "x": 13,
    "z": 26.2,
    "rot": 0
   },
@@ -157,7 +181,7 @@
    "id": "montacargas",
    "tipo": "montacargas",
    "x": 29.3,
-   "z": 5.0,
+   "z": 5,
    "rot": 90
   },
   {
@@ -179,92 +203,128 @@
    "tipo": "sierra",
    "nombre": "Sierra de cassette",
    "x": 19.2,
-   "z": 13.0,
-   "rot": 0
+   "z": 12.5,
+   "rot": 0,
+   "x_plano": 19.2,
+   "z_plano": 13,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "sierra_bottom",
    "tipo": "sierra",
    "nombre": "Sierra de bottom rail",
    "x": 19.2,
-   "z": 15.4,
-   "rot": 0
+   "z": 14.9,
+   "rot": 0,
+   "x_plano": 19.2,
+   "z_plano": 15.4,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "sierra_tubo",
    "tipo": "sierra",
    "nombre": "Sierra de tubo",
    "x": 19.2,
-   "z": 17.9,
-   "rot": 0
+   "z": 17.4,
+   "rot": 0,
+   "x_plano": 19.2,
+   "z_plano": 17.9,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "mesa_tela_1",
    "tipo": "mesa_tela",
    "x": 18.1,
-   "z": 27.0,
-   "rot": 0
+   "z": 25.4,
+   "rot": 0,
+   "x_plano": 18.1,
+   "z_plano": 27,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "mesa_tela_2",
    "tipo": "mesa_tela",
    "x": 23.2,
-   "z": 27.0,
-   "rot": 0
+   "z": 25.4,
+   "rot": 0,
+   "x_plano": 23.2,
+   "z_plano": 27,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "mesa_tela_3",
    "tipo": "mesa_tela",
    "x": 18.1,
-   "z": 22.1,
+   "z": 20.5,
    "rot": 0,
-   "solo_escenario_b": true
+   "solo_escenario_b": true,
+   "x_plano": 18.1,
+   "z_plano": 22.1,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "mesa_tela_4",
    "tipo": "mesa_tela",
    "x": 23.2,
-   "z": 22.1,
+   "z": 20.5,
    "rot": 0,
-   "solo_escenario_b": true
+   "solo_escenario_b": true,
+   "x_plano": 23.2,
+   "z_plano": 22.1,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "entubadora_1",
    "tipo": "entubadora",
    "x": 29.1,
-   "z": 26.0,
-   "rot": 0
+   "z": 25,
+   "rot": 0,
+   "x_plano": 29.1,
+   "z_plano": 26,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "entubadora_2",
    "tipo": "entubadora",
    "x": 29.1,
-   "z": 27.2,
-   "rot": 0
+   "z": 26.2,
+   "rot": 0,
+   "x_plano": 29.1,
+   "z_plano": 27.2,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "entubadora_3",
    "tipo": "entubadora",
    "x": 29.1,
-   "z": 23.6,
+   "z": 22.6,
    "rot": 0,
-   "solo_escenario_b": true
+   "solo_escenario_b": true,
+   "x_plano": 29.1,
+   "z_plano": 23.6,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "entubadora_4",
    "tipo": "entubadora",
    "x": 29.1,
-   "z": 24.8,
+   "z": 23.8,
    "rot": 0,
-   "solo_escenario_b": true
+   "solo_escenario_b": true,
+   "x_plano": 29.1,
+   "z_plano": 24.8,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "entubadora_respaldo",
    "tipo": "entubadora",
    "x": 29.1,
-   "z": 28.4,
+   "z": 27.4,
    "rot": 0,
-   "solo_escenario_b": true
+   "solo_escenario_b": true,
+   "x_plano": 29.1,
+   "z_plano": 28.4,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "kit_ace",
@@ -298,17 +358,23 @@
   {
    "id": "ens_bottom",
    "tipo": "ens_bottom",
-   "x": 40.4,
+   "x": 39.6,
    "z": 21.8,
-   "rot": 0
+   "rot": 0,
+   "x_plano": 40.4,
+   "z_plano": 21.8,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   },
   {
    "id": "ens_bottom_2",
    "tipo": "ens_bottom",
-   "x": 40.4,
+   "x": 39.6,
    "z": 23.3,
    "rot": 0,
-   "solo_escenario_b": true
+   "solo_escenario_b": true,
+   "x_plano": 40.4,
+   "z_plano": 23.3,
+   "_ajuste": "Movida para dejar pasillos de montacargas de 4 m (ver TODO.md)"
   }
  ],
  "flujos": [
@@ -326,11 +392,11 @@
     ],
     [
      29.1,
-     17.9
+     17.4
     ],
     [
      29.1,
-     25.5
+     25
     ]
    ]
   },
@@ -348,15 +414,15 @@
     ],
     [
      20.6,
-     24.5
+     22.9
     ],
     [
      29.1,
-     24.5
+     22.9
     ],
     [
      29.1,
-     25.5
+     25
     ]
    ]
   },
@@ -374,11 +440,11 @@
     ],
     [
      23.3,
-     13.0
+     12.5
     ],
     [
      36.5,
-     13.0
+     12.5
     ],
     [
      36.5,
@@ -392,14 +458,14 @@
    "puntos": [
     [
      23.3,
-     15.4
+     14.9
     ],
     [
-     40.4,
-     15.4
+     39.6,
+     14.9
     ],
     [
-     40.4,
+     39.6,
      21.3
     ]
    ]
@@ -410,11 +476,11 @@
    "puntos": [
     [
      29.1,
-     26.0
+     25
     ],
     [
      34.8,
-     26.0
+     25.4
     ],
     [
      35.2,
@@ -425,27 +491,27 @@
      18.2
     ],
     [
-     40.4,
+     39.6,
      18.2
     ],
     [
-     40.4,
+     39.6,
      21.8
     ],
     [
-     46.2,
+     47.3,
      21.8
     ],
     [
-     46.2,
+     47.3,
      20.1
     ],
     [
-     51.0,
+     51,
      20.1
     ],
     [
-     51.0,
+     51,
      24.9
     ],
     [
@@ -477,36 +543,36 @@
    "z": 16.1
   },
   {
-   "x": 32.0,
-   "z": 27.0
+   "x": 32.5,
+   "z": 25
   },
   {
    "x": 20.6,
-   "z": 29.8
+   "z": 28.1
   },
   {
    "x": 32.8,
-   "z": 22.0
+   "z": 22
   },
   {
    "x": 34.6,
    "z": 16.8
   },
   {
-   "x": 42.3,
-   "z": 20.7
+   "x": 39.6,
+   "z": 20.6
   },
   {
-   "x": 44.4,
+   "x": 44.6,
    "z": 15.1
   },
   {
-   "x": 44.4,
+   "x": 44.6,
    "z": 24.8
   },
   {
    "x": 53.5,
-   "z": 27.0
+   "z": 27
   }
  ],
  "kpis": {

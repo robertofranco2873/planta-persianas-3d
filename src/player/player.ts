@@ -16,6 +16,8 @@ export class Player {
   camDist = 6;
   private camDistSmooth = 6;
   drone = false;
+  /** Vista en primera persona (P). */
+  firstPerson = false;
   dronePos = new THREE.Vector3();
   droneYaw = 0;
   dronePitch = -0.6;
@@ -49,8 +51,8 @@ export class Player {
     if (this.drone) return this.updateDrone(dt, input, m, controlsEnabled);
     if (controlsEnabled) {
       this.camYaw -= m.dx * sens;
-      this.camPitch = clamp(this.camPitch + m.dy * sens, -0.25, 1.35);
-      this.camDist = clamp(this.camDist + m.wheel * 0.8, 1.8, 16);
+      this.camPitch = clamp(this.camPitch + m.dy * sens, this.firstPerson ? -1.2 : -0.25, this.firstPerson ? 1.35 : 1.35);
+      if (!this.firstPerson) this.camDist = clamp(this.camDist + m.wheel * 0.8, 1.8, 16);
     }
     // movimiento relativo a la cámara
     let fx = 0, fz = 0;
@@ -74,9 +76,11 @@ export class Player {
       while (d > Math.PI) d -= Math.PI * 2;
       while (d < -Math.PI) d += Math.PI * 2;
       this.facing += d * Math.min(1, dt * 12);
+      if (this.firstPerson) this.facing = this.camYaw + Math.PI;
       this.pos.x += dx * this.speed * dt;
       this.pos.z += dz * this.speed * dt;
     }
+    if (this.firstPerson) this.facing = this.camYaw + Math.PI;
     this.resolve();
     this.ch.root.position.copy(this.pos);
     this.ch.root.rotation.y = this.facing;
@@ -101,6 +105,17 @@ export class Player {
   }
 
   private updateCamera(dt: number) {
+    if (this.firstPerson) {
+      // ojos a 1.62 m, mirando en la dirección de la cámara
+      const eye = new THREE.Vector3(this.pos.x, 1.62 + this.ch.bob, this.pos.z);
+      const look = new THREE.Vector3(-Math.sin(this.camYaw) * Math.cos(this.camPitch), -Math.sin(this.camPitch), -Math.cos(this.camYaw) * Math.cos(this.camPitch));
+      eye.addScaledVector(new THREE.Vector3(look.x, 0, look.z).normalize(), 0.12);
+      this.camera.position.copy(eye);
+      this.camera.lookAt(eye.clone().add(look));
+      this.ch.root.visible = false;
+      this.camDistSmooth = 0.6;
+      return;
+    }
     const target = new THREE.Vector3(this.pos.x, 1.55, this.pos.z);
     const dir = new THREE.Vector3(Math.sin(this.camYaw) * Math.cos(this.camPitch), Math.sin(this.camPitch), Math.cos(this.camYaw) * Math.cos(this.camPitch));
     const free = this.col.rayDistance(target, dir, this.camDist);

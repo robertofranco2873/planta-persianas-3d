@@ -12,13 +12,14 @@ import { Discoveries, loadPrefs, savePrefs } from './interact/discoveries';
 import { machineHtml, npcHtml, interactuableHtml, catOfInteractuable, Cat, CAT_LABEL } from './interact/content';
 import { drawMap } from './ui/minimap';
 import { ribbon } from './util/geo';
+import { Guide } from './guide/guide';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r(null)));
 
 const CONTROLS: [string, string][] = [
   ['W A S D', 'Moverse'], ['Shift', 'Correr'], ['Mouse', 'Orbitar la cámara'], ['Rueda', 'Zoom'],
-  ['E', 'Interactuar / ver'], ['L', 'Cambiar layout (actual ↔ propuesto)'], ['B', 'Mostrar/ocultar escenario B'],
+  ['E', 'Interactuar / ver'], ['G', 'Recorrido guiado: mostrar/ocultar misiones y flecha'], ['P', 'Primera / tercera persona'], ['L', 'Cambiar layout (actual ↔ propuesto)'], ['B', 'Mostrar/ocultar escenario B'],
   ['F', 'Vista de flujos'], ['M', 'Mapa grande'], ['Tab', 'Libreta de descubrimientos'], ['V', 'Modo dron (Espacio/C subir/bajar)'],
   ['H', 'Ayuda'], ['Esc', 'Menú'],
 ];
@@ -83,14 +84,16 @@ async function main() {
   // ---------------- jugador
   const player = new Player(col, camera);
   scene.add(player.ch.root);
-  const rec = zonaById(data, 'recepcion');
-  // frente a la recepción, mirando hacia la nave (norte)
-  player.spawn(rec ? rec.x - 0.4 : 18, rec ? rec.z + 1.4 : 38.8, Math.PI);
+  // afuera, en la banqueta del estacionamiento, mirando hacia la entrada principal (recepción)
+  const ent = building.entrance;
+  const sx = ent.x + 8, sz = ent.z + 3.4;
+  player.spawn(sx, sz, Math.atan2(ent.x - sx, ent.z - sz));
   player.resolve();
   if (prefs.gear) player.ch.setGear('#F1C40F', '#F1C40F');
 
   const input = new Input(canvas);
   const disc = new Discoveries();
+  const guide = data.recorrido ? new Guide(data, data.recorrido, props, lm, col, disc, T) : null;
 
   // ---------------- calidad
   let quality: 'alta' | 'baja' = prefs.quality;
@@ -184,7 +187,12 @@ async function main() {
     input.lock();
   };
   $('btnEnter').addEventListener('click', enterGame);
-  $('btnReset').addEventListener('click', () => { if (confirm('¿Borrar todos los descubrimientos?')) { disc.reset(); savePrefs({ gear: false }); player.ch.setGear(null, null); } });
+  $('btnReset').addEventListener('click', () => { if (confirm('¿Borrar descubrimientos y progreso del recorrido?')) { disc.reset(); guide?.reset(); savePrefs({ gear: false }); player.ch.setGear(null, null); } });
+  const chkGuide = $<HTMLInputElement>('chkGuide');
+  chkGuide.checked = guide?.enabled ?? false;
+  chkGuide.disabled = !guide;
+  chkGuide.addEventListener('change', () => guide?.setEnabled(chkGuide.checked));
+  guide?.onStep.push((done, next) => toast('Paso completado: ' + done.titulo, next ? 'Siguiente: ' + next.titulo : data.recorrido!.final, next ? 3 : 6));
   canvas.addEventListener('click', () => { if (started && overlay === 'none' && !input.locked) input.lock(); });
   document.addEventListener('pointerlockchange', () => {
     if (!document.pointerLockElement && started && overlay === 'none') showMenu(true);
@@ -269,6 +277,7 @@ async function main() {
     lm.setLayout(next);
   };
   lm.onChange.push(() => {
+    if (lm.active === 'propuesto') guide?.flag('accion:layout_propuesto');
     toast(lm.layout.nombre, lm.layout.descripcion, 3.5);
     setHudTarget();
     renderHud();
@@ -286,16 +295,26 @@ async function main() {
       case 'KeyL': toggleLayout(); break;
       case 'KeyB':
         if (lm.active !== 'propuesto') toast('Escenario B', 'Sólo existe en el layout propuesto: presiona L primero.');
-        else if (lm.toggleB()) toast(lm.showB ? 'Escenario B visible' : 'Escenario B oculto', lm.showB ? `+${data.layouts.propuesto.escenario_b?.maquinas_extra ?? ''} máquinas (fantasmas punteados) · capacidad ${data.layouts.propuesto.escenario_b?.capacidad_dia ?? ''}/día en ${data.layouts.propuesto.escenario_b?.turnos ?? ''} turno` : '');
+        else if (lm.toggleB() && (guide?.flag('accion:escenario_b'), true)) toast(lm.showB ? 'Escenario B visible' : 'Escenario B oculto', lm.showB ? `+${data.layouts.propuesto.escenario_b?.maquinas_extra ?? ''} máquinas (fantasmas punteados) · capacidad ${data.layouts.propuesto.escenario_b?.capacidad_dia ?? ''}/día en ${data.layouts.propuesto.escenario_b?.turnos ?? ''} turno` : '');
         break;
       case 'KeyF':
         lm.setFlows(!lm.showFlows);
+        if (lm.showFlows) guide?.flag('accion:flujos');
         discover('i:dron_flujos');
         if (lm.showFlows) toast('Vista de flujos', `Recorrido por persiana ${lm.layout.kpis.recorrido_por_persiana_m} m · traslado más largo ${lm.layout.kpis.traslado_mas_largo_m} m`);
         renderHud();
         break;
       case 'KeyM': showBig = !showBig; bigmap.classList.toggle('hidden', !showBig); break;
       case 'KeyH': help.classList.toggle('hidden'); break;
+      case 'KeyG':
+        if (guide) { guide.setEnabled(!guide.enabled); chkGuide.checked = guide.enabled; toast(guide.enabled ? 'Recorrido guiado activado' : 'Recorrido guiado oculto', guide.enabled ? 'Sigue la flecha azul del piso' : 'G para volver a mostrarlo', 1.8); }
+        break;
+      case 'KeyP':
+        if (player.drone) break;
+        player.firstPerson = !player.firstPerson;
+        if (player.firstPerson) player.camPitch = 0.05; else player.camPitch = 0.35;
+        toast(player.firstPerson ? 'Primera persona' : 'Tercera persona', '', 1.2);
+        break;
       case 'KeyV':
         player.setDrone(!player.drone);
         toast(player.drone ? 'Modo dron' : 'Modo a pie', player.drone ? 'WASD mover · Espacio/C subir/bajar · Shift rápido · V para volver' : '', 2);
@@ -308,7 +327,7 @@ async function main() {
   let frame = 0;
   let wasTrans = false;
   let fpsAcc = 0, fpsN = 0;
-  (window as any).__game = { lm, player, camera, renderer, scene, props, disc, toggleLayout, setLayout: (l: any) => lm.setLayout(l), enterGame, data, interact, stats: () => renderer.info.render };
+  (window as any).__game = { guide, col, lm, player, camera, renderer, scene, props, disc, toggleLayout, setLayout: (l: any) => lm.setLayout(l), enterGame, data, interact, stats: () => renderer.info.render };
 
   const loop = () => {
     requestAnimationFrame(loop);
@@ -330,7 +349,8 @@ async function main() {
     wasTrans = lm.transitioning;
     mark('misc');
     props.update(dt, player.pos, talkingTo); mark('props');
-    building.update(player.pos, camera.position, player.drone); mark('building');
+    building.update(player.pos, camera.position, player.drone, dt); mark('building');
+    guide?.update(dt, player.pos, scene, !started || player.drone);
 
     // HUD contadores animados
     let hudChanged = false;

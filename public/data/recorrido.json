@@ -1,0 +1,134 @@
+{
+ "_nota": "Recorrido guiado (misiones). Tipos de objetivo: 'ver' (interactuar con E; ref = 'i:<interactuable>', 'n:<npc>' o 'm:<tipo de máquina>'), 'zona' (llegar a una zona de planta.json), 'anden' (llegar a un andén de planta.json), 'accion' (ref = 'layout_propuesto', 'flujos' o 'escenario_b'). Un paso se completa cuando se cumplen todos sus objetivos.",
+ "titulo": "Recorrido guiado",
+ "final": "¡Recorriste toda la planta! Ahora explora libremente: compara los layouts con L, revisa la libreta con Tab y busca lo que te falte en el minimapa.",
+ "pasos": [
+  {
+   "id": "entrada",
+   "titulo": "Entra por la recepción",
+   "descripcion": "Llegaste a la planta de Apodaca. Toda visita entra por la entrada principal y se registra en la recepción.",
+   "objetivos": [
+    { "tipo": "zona", "ref": "recepcion", "texto": "Llega a la recepción" }
+   ]
+  },
+  {
+   "id": "producto",
+   "titulo": "Conoce el producto y al equipo",
+   "descripcion": "En la recepción está la vitrina con la persiana motorizada y la placa del Equipo 4.",
+   "objetivos": [
+    { "tipo": "ver", "ref": "i:vitrina_producto", "texto": "Mira la vitrina del producto" },
+    { "tipo": "ver", "ref": "i:placa_equipo", "texto": "Lee la placa del equipo" },
+    { "tipo": "ver", "ref": "i:mapa_ubicacion", "texto": "Revisa por qué estamos en Apodaca" }
+   ]
+  },
+  {
+   "id": "oficinas",
+   "titulo": "Oficinas",
+   "descripcion": "Antes de entrar a la nave, pasa con el gerente y revisa los números del proyecto.",
+   "objetivos": [
+    { "tipo": "ver", "ref": "n:gerente", "texto": "Habla con el gerente de planta" },
+    { "tipo": "ver", "ref": "i:terminal_finanzas", "texto": "Consulta la terminal financiera" },
+    { "tipo": "ver", "ref": "i:sala_juntas", "texto": "Revisa la pantalla de la sala de juntas (Etapa 3)" }
+   ]
+  },
+  {
+   "id": "seguridad",
+   "titulo": "Equípate para entrar a producción",
+   "descripcion": "Nadie entra a la nave sin EPP. La estación EHS está junto al acceso peatonal.",
+   "objetivos": [
+    { "tipo": "ver", "ref": "i:estacion_ehs", "texto": "Toma casco y chaleco en la estación EHS" },
+    { "tipo": "ver", "ref": "n:ehs", "texto": "Habla con el coordinador de seguridad" }
+   ]
+  },
+  {
+   "id": "materia_prima",
+   "titulo": "Almacén de materia prima",
+   "descripcion": "Todo empieza aquí: tubo, perfiles y tela llegan por el pasillo de montacargas.",
+   "objetivos": [
+    { "tipo": "ver", "ref": "i:almacenes_info", "texto": "Lee el letrero de materia prima" },
+    { "tipo": "ver", "ref": "n:almacenista", "texto": "Habla con el auxiliar de almacén" },
+    { "tipo": "ver", "ref": "m:rack_tela", "texto": "Revisa el almacén de rollos de tela" }
+   ]
+  },
+  {
+   "id": "corte",
+   "titulo": "Producción · corte",
+   "descripcion": "Las sierras cortan tubo, bottom rail y cassette a la medida de cada pedido.",
+   "objetivos": [
+    { "tipo": "ver", "ref": "m:sierra", "texto": "Revisa una sierra de corte" },
+    { "tipo": "ver", "ref": "n:operador_sierra", "texto": "Habla con el operador de sierras" }
+   ]
+  },
+  {
+   "id": "tela",
+   "titulo": "Producción · tela y entubado",
+   "descripcion": "El cuello de botella de la línea: corte de tela y entubado.",
+   "objetivos": [
+    { "tipo": "ver", "ref": "m:mesa_tela", "texto": "Revisa una mesa de corte de tela" },
+    { "tipo": "ver", "ref": "m:entubadora", "texto": "Revisa una entubadora" }
+   ]
+  },
+  {
+   "id": "ensamble",
+   "titulo": "Producción · ensamble",
+   "descripcion": "Kit de componentes, resorte, cassette y bottom rail.",
+   "objetivos": [
+    { "tipo": "ver", "ref": "m:kit_ace", "texto": "Revisa la estación Kit Ace" },
+    { "tipo": "ver", "ref": "m:ens_cassette", "texto": "Revisa el ensamble de cassette" },
+    { "tipo": "ver", "ref": "m:ens_bottom", "texto": "Revisa el ensamble de bottom rail" }
+   ]
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Producción · pruebas e inspección",
+   "descripcion": "En los elevadores se programan los límites del motor y se inspeccionan 19 puntos.",
+   "objetivos": [
+    { "tipo": "ver", "ref": "m:elevador", "texto": "Revisa un elevador de prueba" },
+    { "tipo": "ver", "ref": "n:inspector", "texto": "Habla con la inspectora de calidad" }
+   ]
+  },
+  {
+   "id": "empaque",
+   "titulo": "Empaque y almacén de producto terminado",
+   "descripcion": "La caja se fabrica a la medida y la persiana espera su embarque.",
+   "objetivos": [
+    { "tipo": "ver", "ref": "m:packsize", "texto": "Revisa la Packsize" },
+    { "tipo": "ver", "ref": "m:rack_pt", "texto": "Revisa el almacén de producto terminado" }
+   ]
+  },
+  {
+   "id": "embarque",
+   "titulo": "Andenes de embarque",
+   "descripcion": "Los tráileres cargan en los andenes del este, lejos del personal.",
+   "objetivos": [
+    { "tipo": "anden", "ref": "anden_este_2", "texto": "Ve a los andenes de embarque" }
+   ]
+  },
+  {
+   "id": "layout",
+   "titulo": "Compara los layouts",
+   "descripcion": "El tablero de producción muestra los KPIs del layout activo. Usa la palanca para ver la propuesta de la Etapa 3.",
+   "objetivos": [
+    { "tipo": "ver", "ref": "i:tablero_produccion", "texto": "Revisa el tablero de producción" },
+    { "tipo": "accion", "ref": "layout_propuesto", "texto": "Usa la palanca (o L) para ver el layout propuesto" }
+   ]
+  },
+  {
+   "id": "flujos",
+   "titulo": "Sigue el material",
+   "descripcion": "Mira cómo se acortan los recorridos con el layout propuesto.",
+   "objetivos": [
+    { "tipo": "accion", "ref": "flujos", "texto": "Presiona F para ver los flujos de material" },
+    { "tipo": "ver", "ref": "n:ing_procesos", "texto": "Habla con el ingeniero de procesos" }
+   ]
+  },
+  {
+   "id": "evacuacion",
+   "titulo": "Simulacro de evacuación",
+   "descripcion": "Termina el recorrido en un punto de reunión. Las salidas de emergencia se abren desde dentro.",
+   "objetivos": [
+    { "tipo": "ver", "ref": "i:punto_reunion", "texto": "Llega a un punto de reunión y presiona E" }
+   ]
+  }
+ ]
+}

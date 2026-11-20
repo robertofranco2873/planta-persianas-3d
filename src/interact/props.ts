@@ -27,13 +27,15 @@ const PLACE: Record<string, (d: GameData) => Spot> = {
   pantalla_simulacion: (d) => { const z = zonaById(d, 'mantenimiento')!; return { x: z.x, z: d.planta.nave.d - 0.08, rot: Math.PI }; },
   estacion_ehs: (d) => ({ x: 25.2, z: d.planta.nave.d - 0.35, rot: Math.PI }),
   area_residuos: (d) => { const z = zonaById(d, 'residuos')!; return { x: z.x - z.w / 2 - 1.7, z: d.planta.nave.d - 0.5, rot: Math.PI }; },
-  almacenes_info: (d) => { const z = zonaById(d, 'almacen_mp')!; return { x: z.x + z.w / 2 + 0.8, z: z.z - z.d / 2 + 1.0, rot: Math.PI / 2 }; },
+  // al final del pasillo oeste de montacargas, frente al rack de tubo
+  almacenes_info: (d) => { const z = zonaById(d, 'almacen_mp')!; return { x: z.x + z.w / 2 + 0.6, z: z.z + z.d / 2 + 1.4, rot: Math.PI / 2 }; },
   tablero_rh: (d) => { const z = zonaById(d, 'comedor')!; return { x: z.x, z: z.z - z.d / 2 + 0.12, rot: 0 }; },
 };
 const NPC_PLACE: Record<string, (d: GameData) => Spot> = {
   gerente: (d) => { const s = PLACE.terminal_finanzas(d); return { x: s.x, z: s.z - 0.85, rot: 0 }; },
   supervisor: (d) => ({ x: 31.2, z: d.planta.nave.d - 1.7, rot: Math.PI }),
   ing_procesos: (d) => { const z = zonaById(d, 'mantenimiento')!; return { x: z.x + 1.2, z: d.planta.nave.d - 1.2, rot: Math.PI }; },
+  almacenista: (d) => { const z = zonaById(d, 'almacen_mp')!; return { x: z.x - 0.2, z: z.z - z.d / 2 + 0.3, rot: 0 }; },
   montacarguista: (d) => { const z = zonaById(d, 'pasillo_norte')!; return { x: z.x - 6, z: z.z - z.d / 2 + 0.5, rot: 0 }; },
 };
 const VEST: Record<string, [string | null, string | null, string]> = {

@@ -10,7 +10,8 @@ type Side = 'N' | 'S' | 'E' | 'W';
 
 export interface Building {
   group: THREE.Group;
-  update(player: THREE.Vector3, cam: THREE.Vector3, drone: boolean): void;
+  update(player: THREE.Vector3, cam: THREE.Vector3, drone: boolean, dt?: number): void;
+  entrance: { x: number; z: number };
   insideNave(p: THREE.Vector3): boolean;
   insideAnnex(p: THREE.Vector3): boolean;
   annexRooms: Zona[];
@@ -107,6 +108,8 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
   };
 
   const deco = new THREE.Group();
+  const shutterM = M.std('#b9bec4', 0.5, 0.45);
+  const exitDoors: { hinge: THREE.Group; open: number; sign: number; box: ReturnType<typeof rectAABB>; x: number; z: number; baseRot: number }[] = [];
   const decorateOpening = (side: Side, o: Opening, fixed: number) => {
     const horiz = side === 'N' || side === 'S';
     const place = (m: THREE.Object3D, along: number, y: number, off = 0) => {
@@ -121,17 +124,38 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
     place(box(0.12, o.h, WALL_T + 0.06, frameMat), o.c + o.w / 2 + 0.06, o.h / 2);
     place(box(o.w + 0.24, 0.12, WALL_T + 0.06, frameMat), o.c, o.h + 0.06);
     if (o.kind === 'porton' || o.kind === 'anden') {
-      // cortina enrollada (portón abierto)
       const drum = cyl(0.3, 0.3, o.w, M.steel, 14);
       drum.rotation.z = Math.PI / 2;
       const gg = new THREE.Group(); gg.add(drum);
       place(gg, o.c, o.h + 0.45, -0.5);
+      if (o.kind === 'porton') {
+        // portón de recibo cerrado (se entra a la planta por la recepción)
+        place(box(o.w, o.h, 0.08, shutterM, 0, 0, 0), o.c, o.h / 2);
+        for (let y = 0.3; y < o.h; y += 0.3) place(box(o.w, 0.03, 0.1, M.steel), o.c, y);
+        const bb = horiz ? rectAABB(o.c, fixed, o.w, WALL_T + 0.1, o.h) : rectAABB(fixed, o.c, WALL_T + 0.1, o.w, o.h);
+        col.addWall(bb, 0, o.h);
+      }
       // topes de andén
       if (o.kind === 'anden') {
         place(boxB(0.3, 0.9, 0.25, M.black), o.c - o.w / 2 + 0.2, 0, 0.3);
         place(boxB(0.3, 0.9, 0.25, M.black), o.c + o.w / 2 - 0.2, 0, 0.3);
       }
     } else {
+      if (o.kind === 'salida') {
+        // puerta de emergencia: abre hacia afuera, sólo desde dentro (barra antipánico)
+        const outSign = side === 'N' || side === 'W' ? -1 : 1;
+        const hingeAlong = horiz ? o.c - o.w / 2 : o.c + o.w / 2;
+        const hinge = new THREE.Group();
+        const leaf = new THREE.Group();
+        leaf.add(box(o.w - 0.04, o.h - 0.04, 0.05, M.std('#7f8c8d', 0.5, 0.4), o.w / 2, o.h / 2, 0));
+        leaf.add(box(o.w * 0.7, 0.06, 0.06, M.red, o.w / 2, 1.0, 0.06 * -outSign));
+        leaf.add(box(o.w * 0.7, 0.06, 0.06, M.red, o.w / 2, 1.0, 0.06 * outSign));
+        hinge.add(leaf);
+        hinge.userData.dynamic = true;
+        place(hinge, hingeAlong, 0, -0.0);
+        const bb = horiz ? rectAABB(o.c, fixed, o.w, WALL_T + 0.1, o.h) : rectAABB(fixed, o.c, WALL_T + 0.1, o.w, o.h);
+        exitDoors.push({ hinge, open: 0, sign: outSign, box: bb, x: horiz ? o.c : fixed, z: horiz ? fixed : o.c, baseRot: hinge.rotation.y });
+      }
       // letrero de salida
       const s = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 0.32), new THREE.MeshBasicMaterial({ map: canvasTex(textCanvas([o.kind === 'salida' ? 'SALIDA DE EMERGENCIA' : 'ACCESO PEATONAL'], { w: 512, h: 160, bg: '#1E8449', font: 52 })) }));
       const sign = new THREE.Group(); sign.add(s);
@@ -243,12 +267,17 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
   // Pasillos peatonales verdes de 1 m (decisión de diseño: no vienen en el JSON, ver TODO.md)
   const pc = zonaById(data, 'pasillo_central');
   const door = open.S.find((o) => o.kind === 'puerta');
-  if (pc && door) {
-    const wx0 = pc.x - pc.w / 2;
-    floorPaint(marks, M.paintGreen, door.c - 0.5, 30.6, wx0 - 0.05, 31.6);
-    floorPaint(marks, M.paintGreen, door.c - 0.5, 31.6, door.c + 0.5, z1);
+  const ps = zonaById(data, 'pasillo_sur');
+  if (door) {
+    // del acceso peatonal hacia producción, cruzando el pasillo sur con paso de cebra
+    const top = ps ? ps.z - ps.d / 2 - 2.0 : 27.0;
+    floorPaint(marks, M.paintGreen, door.c - 0.5, top, door.c + 0.5, z1);
+    if (ps) for (let zz = ps.z - ps.d / 2 + 0.25; zz < ps.z + ps.d / 2; zz += 0.6) floorPaint(marks, M.paintWhite, door.c - 0.5, zz, door.c + 0.5, zz + 0.3);
   }
-  floorPaint(marks, M.paintGreen, 8.5, 7.0, 9.5, 27.5);
+  const po = zonaById(data, 'pasillo_oeste');
+  if (po) floorPaint(marks, M.paintGreen, po.x + po.w / 2 + 0.15, po.z - po.d / 2, po.x + po.w / 2 + 1.05, po.z + po.d / 2);
+  else floorPaint(marks, M.paintGreen, 8.5, 7.0, 9.5, 27.5);
+  void pc;
   // nombres de zonas pintados en el piso
   for (const z of P.zonas) {
     if (!['almacen', 'residuos', 'servicio', 'pasillo_montacargas'].includes(z.tipo) && z.id !== 'empaque') continue;
@@ -280,8 +309,8 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
     roomDoors.oficinas = [['N', gx], ['N', ba.x], ['E', of.z - of.d / 2 + 2.5]];
     roomDoors.oficina_gerente = [['S', gx]];
     roomDoors.banos = [['S', ba.x]];
-    roomDoors.recepcion = [['E', re.z]];
-    roomDoors.lockers = [['W', lo.z]];
+    roomDoors.recepcion = [['E', re.z], ['E', z1 + WALL_T + 0.75]];
+    roomDoors.lockers = [['W', lo.z + 1.0]];
     roomDoors.comedor = [['W', co.z], ['E', co.z]];
   }
   const RH = 3.0;
@@ -334,6 +363,44 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
   if (annexRooms.length) {
     const fl = floorRect(annexBox.max.x - annexBox.min.x + 1, annexBox.max.z - z1 + 0.5, M.apron, (annexBox.min.x + annexBox.max.x) / 2, (z1 + annexBox.max.z) / 2, 0.003);
     group.add(fl);
+  }
+
+  // ---------- Entrada principal y control de acceso ----------
+  // El pasillo entre recepción y lockers es el vestíbulo; un torniquete obliga a pasar por la recepción.
+  let entrance = { x: (annexBox.min.x + annexBox.max.x) / 2, z: annexBox.max.z + 3 };
+  if (rec && lock) {
+    const cx0 = rec.x + rec.w / 2, cx1 = lock.x - lock.w / 2, cx = (cx0 + cx1) / 2;
+    const tz = z1 + WALL_T + 1.6; // entre la puerta norte (a la nave) y la sur (desde la entrada) de la recepción
+    const ts = new THREE.Group();
+    ts.add(boxB(0.18, 1.0, 0.3, M.steel, cx0 + 0.12, 0, tz), boxB(0.18, 1.0, 0.3, M.steel, cx1 - 0.12, 0, tz));
+    ts.add(box(cx1 - cx0 - 0.3, 0.05, 0.05, M.metal, cx, 0.95, tz));
+    ts.add(box(cx1 - cx0 - 0.3, 0.05, 0.05, M.metal, cx, 0.6, tz));
+    ts.add(boxB(cx1 - cx0, 0.1, 0.1, M.red, cx, 1.9, tz));
+    const tsSign = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 0.28), new THREE.MeshBasicMaterial({ map: canvasTex(textCanvas(['Acceso sólo por recepción'], { w: 512, h: 110, bg: PAL.rojo, font: 40 })) }));
+    tsSign.position.set(cx, 2.2, tz + 0.06);
+    ts.add(tsSign);
+    bake(ts);
+    group.add(ts);
+    col.addWall(rectAABB(cx, tz, cx1 - cx0, 0.3, 1.0), 0, 1.0);
+    // entrada principal al final del vestíbulo
+    const ez = annexRooms.find((r) => r.id === 'oficinas');
+    const eZ = ez ? ez.z + ez.d / 2 : 50;
+    entrance = { x: cx, z: eZ + 0.2 };
+    const can = new THREE.Group();
+    can.add(boxB(4.4, 0.2, 3.0, M.dark, cx, 3.2, eZ + 1.4));
+    for (const dx of [-2.0, 2.0]) can.add(boxB(0.15, 3.2, 0.15, M.dark, cx + dx, 0, eZ + 2.7));
+    can.add(boxB(4.0, 0.03, 2.6, M.std(PAL.cafe, 0.6), cx, 0.0, eZ + 1.4));
+    const sign = new THREE.Mesh(new THREE.PlaneGeometry(4.2, 0.6), new THREE.MeshBasicMaterial({ map: canvasTex(textCanvas(['ENTRADA PRINCIPAL · RECEPCIÓN'], { w: 1024, h: 146, bg: PAL.cafe, border: PAL.amarillo, font: 64 })) }));
+    sign.position.set(cx, 3.75, eZ + 2.9);
+    can.add(sign);
+    bake(can);
+    group.add(can);
+    for (const dx of [-2.0, 2.0]) col.addStatic(rectAABB(cx + dx, eZ + 2.7, 0.2, 0.2, 3.2));
+    // banqueta desde el estacionamiento
+    const est = zonaById(data, 'estacionamiento');
+    const px1 = est ? est.x - est.w / 2 + 6 : cx + 16;
+    const walk = floorRect(px1 - cx + 1.2, 1.8, M.std('#cfc9bf', 0.85), (cx - 0.6 + px1) / 2, eZ + 3.6, 0.004);
+    group.add(walk, floorRect(1.8, 3.2, M.std('#cfc9bf', 0.85), cx, eZ + 1.6, 0.004));
   }
 
   // ---------- Señalética NOM-026 ----------
@@ -407,8 +474,16 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
     }
   };
   return {
-    group, annexRooms, insideNave, insideAnnex,
-    update(player, cam, drone) {
+    group, annexRooms, insideNave, insideAnnex, entrance,
+    update(player, cam, drone, dt = 0.016) {
+      // salidas de emergencia: se abren al acercarse desde dentro; desde fuera están cerradas
+      const inside = insideNave(player);
+      col.setDynamic('exits', inside ? [] : exitDoors.map((d) => d.box));
+      for (const d of exitDoors) {
+        const near = inside && Math.hypot(player.x - d.x, player.z - d.z) < 3.0;
+        d.open += ((near ? 1 : 0) - d.open) * Math.min(1, dt * 4);
+        d.hinge.rotation.y = d.baseRot + d.sign * -1 * d.open * 1.7;
+      }
       const inN = insideNave(player) || insideNave(cam);
       roof.visible = !(inN || drone);
       annexRoof.visible = !(insideAnnex(player) || drone);

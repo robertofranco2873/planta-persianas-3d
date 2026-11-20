@@ -61,12 +61,15 @@ export interface GameData {
   kpis: Kpis;
   interactuables: Interactuable[];
   npcs: Npc[];
+  recorrido: import('./guide/guide').Recorrido | null;
 }
 
 export async function loadData(onProgress: (f: number, msg: string) => void): Promise<GameData> {
   const files = ['planta', 'layout_actual', 'layout_propuesto', 'maquinas', 'kpis', 'interactuables', 'npcs'];
   const out: Record<string, any> = {};
   let done = 0;
+  // opcional: recorrido guiado
+  const rec = fetch('./data/recorrido.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null).then((j) => { out.recorrido = j; });
   await Promise.all(files.map(async (f) => {
     const r = await fetch(`./data/${f}.json`, { cache: 'no-cache' });
     if (!r.ok) throw new Error(`No se pudo cargar data/${f}.json`);
@@ -74,6 +77,7 @@ export async function loadData(onProgress: (f: number, msg: string) => void): Pr
     done++;
     onProgress(done / files.length, `Datos: ${f}.json`);
   }));
+  await rec;
   const maquinas = { ...out.maquinas };
   delete maquinas._nota;
   return {
@@ -83,6 +87,7 @@ export async function loadData(onProgress: (f: number, msg: string) => void): Pr
     kpis: out.kpis,
     interactuables: out.interactuables,
     npcs: out.npcs,
+    recorrido: out.recorrido ?? null,
   };
 }
 

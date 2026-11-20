@@ -14,6 +14,8 @@ Recorrido 3D de mundo abierto por la planta de persianas motorizadas de Apodaca,
 | Mouse | Orbitar la cámara (haz clic en el juego para capturar el mouse) |
 | Rueda | Zoom (o desplazar el panel abierto) |
 | E | Interactuar: ver ficha, hablar, usar la palanca |
+| G | Mostrar/ocultar el recorrido guiado (misiones y flecha en el piso) |
+| P | Cambiar entre primera y tercera persona |
 | L | Cambiar entre layout actual y propuesto (también con la palanca junto al tablero de producción) |
 | B | Mostrar/ocultar el escenario B (sólo en el layout propuesto) |
 | F | Vista de flujos de material |
@@ -22,6 +24,14 @@ Recorrido 3D de mundo abierto por la planta de persianas motorizadas de Apodaca,
 | V | Modo dron (Espacio/C para subir/bajar, Shift rápido) |
 | H | Ayuda |
 | Esc | Menú (pausa y calidad gráfica) |
+
+## Recorrido guiado
+
+Apareces afuera, en la banqueta del estacionamiento, y entras por la **entrada principal**. Un torniquete obliga a pasar por la **recepción**; los portones de recibo están cerrados y las salidas de emergencia sólo se abren desde dentro. Las misiones siguen el orden de una visita real: recepción → oficinas → seguridad (EPP) → almacén de materia prima → corte → tela y entubado → ensamble → pruebas → empaque y producto terminado → andenes → comparación de layouts → flujos → punto de reunión. Una flecha azul en el piso (calculada con A* para no atravesar muros ni máquinas) indica a dónde ir; se oculta con **G** o desde el menú. Los pasos y textos están en `public/data/recorrido.json`.
+
+## Pasillos de montacargas
+
+La planta tiene una red de pasillos de montacargas de 4 m: norte, central (principal), oeste hacia el rack de tubo y perfiles, y sur hacia el almacén de tela. El montacargas los recorre en bucle y entra en reversa a los tramos sin salida. Las máquinas que invadían esos pasillos se movieron lo mínimo; su posición del plano original quedó guardada en `x_plano`/`z_plano` dentro de `layout_*.json` (ver `scripts/pasillos_4m.mjs` y `TODO.md`).
 
 ## Cómo correrlo en tu computadora
 
@@ -46,6 +56,7 @@ Todo texto y número del juego sale de `public/data/`:
 | `kpis.json` | Indicadores generales, simulación, finanzas, escenarios A/B, curva de arranque |
 | `interactuables.json` | Pantallas, tableros, vitrina y estaciones (puedes agregar `"x"` y `"z"` para fijar su lugar) |
 | `npcs.json` | Personas y sus diálogos (también aceptan `"x"` y `"z"`) |
+| `recorrido.json` | Pasos y objetivos del recorrido guiado |
 
 Coordenadas en metros; origen en la esquina noroeste del interior de la nave, X hacia el este y Z hacia el sur. Después de editar, `npm run deploy` vuelve a publicar.
 

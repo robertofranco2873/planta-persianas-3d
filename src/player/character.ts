@@ -28,6 +28,8 @@ export class Character {
   private helmetGroup = new THREE.Group();
   private capGroup = new THREE.Group();
   phase = Math.random() * 10;
+  /** oscilación vertical actual del cuerpo (para la cámara en primera persona) */
+  get bob() { return this.body.position.y; }
   private workSeed = Math.random() * 10;
 
   constructor(o: CharacterOpts = {}) {

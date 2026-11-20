@@ -13,9 +13,9 @@
   "_nota": "El sitio va de x≈-6 a x≈85 y de z≈-2 a z≈50"
  },
  "nave": {
-  "x": 30.0,
+  "x": 30,
   "z": 17.4,
-  "w": 60.0,
+  "w": 60,
   "d": 34.7,
   "altura": 11,
   "muros": "lámina metálica gris claro con franja inferior de concreto 1.2 m; techo de arcotecho con lámparas LED industriales"
@@ -25,20 +25,38 @@
    "id": "pasillo_norte",
    "nombre": "Pasillo de montacargas (4 m)",
    "tipo": "pasillo_montacargas",
-   "x": 30.0,
-   "z": 5.0,
-   "w": 60.0,
-   "d": 3.7,
+   "x": 30,
+   "z": 5,
+   "w": 60,
+   "d": 4,
    "piso": "concreto con franjas amarillas"
   },
   {
    "id": "pasillo_central",
    "nombre": "Pasillo principal (4 m)",
    "tipo": "pasillo_montacargas",
-   "x": 43.0,
+   "x": 43,
    "z": 20.8,
-   "w": 2.1,
+   "w": 4,
    "d": 27.9
+  },
+  {
+   "id": "pasillo_oeste",
+   "nombre": "Pasillo de montacargas oeste (4 m) · MP tubo y perfiles",
+   "tipo": "pasillo_montacargas",
+   "x": 7,
+   "z": 16,
+   "w": 4,
+   "d": 18
+  },
+  {
+   "id": "pasillo_sur",
+   "nombre": "Pasillo de montacargas sur (4 m) · MP tela",
+   "tipo": "pasillo_montacargas",
+   "x": 27.75,
+   "z": 29.9,
+   "w": 26.5,
+   "d": 4
   },
   {
    "id": "produccion",
@@ -66,7 +84,7 @@
    "x": 17.1,
    "z": 33.3,
    "w": 10.3,
-   "d": 3.0
+   "d": 3
   },
   {
    "id": "almacen_pt",
@@ -163,7 +181,7 @@
    "nombre": "Lockers (12 m²)",
    "tipo": "servicio",
    "x": 26.6,
-   "z": 37.0,
+   "z": 37,
    "w": 5.4,
    "d": 4.1
   },
@@ -208,21 +226,21 @@
   {
    "id": "anden_este_1",
    "nombre": "Andén de embarque 1",
-   "x": 60.0,
+   "x": 60,
    "z": 9.5,
    "remolque": true
   },
   {
    "id": "anden_este_2",
    "nombre": "Andén de embarque 2",
-   "x": 60.0,
+   "x": 60,
    "z": 13.4,
    "remolque": true
   },
   {
    "id": "anden_este_3",
    "nombre": "Andén de embarque 3",
-   "x": 60.0,
+   "x": 60,
    "z": 17.2,
    "remolque": true
   },
@@ -230,28 +248,28 @@
    "id": "anden_norte_1",
    "nombre": "Puerta de recibo de MP 1",
    "x": 17.7,
-   "z": 0.0,
+   "z": 0,
    "remolque": false
   },
   {
    "id": "anden_norte_2",
    "nombre": "Puerta de recibo de MP 2",
    "x": 26.6,
-   "z": 0.0,
+   "z": 0,
    "remolque": false
   },
   {
    "id": "anden_norte_3",
    "nombre": "Puerta de recibo de MP 3",
    "x": 36.1,
-   "z": 0.0,
+   "z": 0,
    "remolque": false
   },
   {
    "id": "anden_norte_4",
    "nombre": "Puerta de recibo de MP 4",
    "x": 45.3,
-   "z": 0.0,
+   "z": 0,
    "remolque": false
   }
  ],
@@ -293,18 +311,18 @@
   "salidas_emergencia": [
    {
     "x": 12.3,
-    "z": 0.0
+    "z": 0
    },
    {
     "x": 39.5,
-    "z": 0.0
+    "z": 0
    },
    {
-    "x": 0.0,
+    "x": 0,
     "z": 11.9
    },
    {
-    "x": 0.0,
+    "x": 0,
     "z": 27.2
    },
    {

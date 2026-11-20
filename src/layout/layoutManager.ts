@@ -37,7 +37,6 @@ export class LayoutManager {
   private trans = -1;
   private fx: Dust;
   forklift?: MachineInst;
-  private forkPath: THREE.Vector3[] = [];
   private forkS = 0;
   private forkLen = 0;
   onChange: ((l: LayoutId) => void)[] = [];
@@ -272,48 +271,66 @@ export class LayoutManager {
   }
 
   // ---------------------------------------------------------------- montacargas
+  private forkSegs: { ax: number; az: number; bx: number; bz: number; len: number; yaw: number }[] = [];
   private setupForklift() {
     const P = this.data.planta;
-    const pn = P.zonas.find((z) => z.id === 'pasillo_norte');
-    const pc = P.zonas.find((z) => z.id === 'pasillo_central');
+    const Z = (id: string) => P.zonas.find((z) => z.id === id);
+    const pn = Z('pasillo_norte'), pc = Z('pasillo_central'), po = Z('pasillo_oeste'), ps = Z('pasillo_sur');
     if (!pn || !pc || !this.forklift) return;
     const zN = pn.z, xC = pc.x;
-    const xW = pn.x - pn.w / 2 + 4, xE = pn.x + pn.w / 2 - 6;
-    const zS = pc.z + pc.d / 2 - 2.5;
-    // bucle: pasillo norte → pasillo central (ida y vuelta) → resto del pasillo norte
-    const pts = [[xW, zN], [xC, zN], [xC, zS], [xC, zN + 0.01], [xE, zN], [xC + 0.01, zN]];
-    this.forkPath = pts.map(([x, z]) => new THREE.Vector3(x, 0, z));
-    this.forkPath.push(this.forkPath[0].clone());
-    this.forkLen = 0;
-    for (let i = 0; i < this.forkPath.length - 1; i++) this.forkLen += this.forkPath[i].distanceTo(this.forkPath[i + 1]);
+    const pts: [number, number][] = [];
+    // pasillo oeste (MP tubo/perfiles): entra de frente y sale en reversa
+    if (po) pts.push([po.x, zN], [po.x, po.z + po.d / 2 - 1.5], [po.x, zN]);
+    else pts.push([pn.x - pn.w / 2 + 4, zN]);
+    pts.push([xC, zN], [xC, ps ? ps.z : pc.z + pc.d / 2 - 2.5]);
+    // pasillo sur (MP tela): ida y vuelta en reversa
+    if (ps) pts.push([ps.x - ps.w / 2 + 2, ps.z], [xC, ps.z]);
+    pts.push([xC, zN]);
+    // zona de andenes: entra hacia el sur y regresa en reversa
+    const xD = pn.x + pn.w / 2 - 4.5;
+    pts.push([xD, zN], [xD, zN + 8], [xD, zN]);
+    pts.push(pts[0]);
+    // segmentos con orientación (reversa después de una vuelta en U)
+    let prevTravel = NaN, reverse = false;
+    this.forkSegs = [];
+    for (let i = 0; i < pts.length - 1; i++) {
+      const [ax, az] = pts[i], [bx, bz] = pts[i + 1];
+      const len = Math.hypot(bx - ax, bz - az);
+      if (len < 0.01) continue;
+      const travel = Math.atan2(-(bz - az), bx - ax);
+      if (!isNaN(prevTravel)) {
+        let d = travel - prevTravel; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI;
+        reverse = Math.abs(d) > 2.6 ? !reverse : false;
+      }
+      this.forkSegs.push({ ax, az, bx, bz, len, yaw: travel + (reverse ? Math.PI : 0) });
+      prevTravel = travel;
+    }
+    this.forkLen = this.forkSegs.reduce((t, g) => t + g.len, 0);
   }
   private updateForklift(dt: number) {
     const f = this.forklift;
-    if (!f || this.forkPath.length < 2) return;
-    this.forkS = (this.forkS + dt * 2.2) % this.forkLen;
+    const S = this.forkSegs;
+    if (!f || S.length < 2) return;
+    this.forkS = (this.forkS + dt * 2.0) % this.forkLen;
     let s = this.forkS;
-    for (let i = 0; i < this.forkPath.length - 1; i++) {
-      const a = this.forkPath[i], b = this.forkPath[i + 1];
-      const l = a.distanceTo(b);
-      if (s <= l) {
-        const k = s / l;
-        const x = lerp(a.x, b.x, k), z = lerp(a.z, b.z, k);
-        let yaw = Math.atan2(-(b.z - a.z), b.x - a.x);
-        // giro suave cerca de los vértices
-        const rem = l - s;
-        if (rem < 1.2 && i + 2 < this.forkPath.length) {
-          const c = this.forkPath[i + 2];
-          const yaw2 = Math.atan2(-(c.z - b.z), c.x - b.x);
-          let d = yaw2 - yaw; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI;
-          yaw += d * (1 - rem / 1.2) * 0.5;
-        }
+    const lerpA = (a: number, b: number, k: number) => { let d = b - a; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return a + d * k; };
+    for (let i = 0; i < S.length; i++) {
+      const g = S[i];
+      if (s <= g.len) {
+        const k = s / g.len;
+        const x = lerp(g.ax, g.bx, k), z = lerp(g.az, g.bz, k);
+        const B = 0.9;
+        let yaw = g.yaw;
+        const prev = S[(i - 1 + S.length) % S.length], next = S[(i + 1) % S.length];
+        if (s < B) yaw = lerpA(prev.yaw, g.yaw, 0.5 + 0.5 * (s / B));
+        else if (g.len - s < B) yaw = lerpA(g.yaw, next.yaw, 0.5 * (1 - (g.len - s) / B));
         f.root.position.set(x, 0, z);
         f.root.rotation.y = yaw;
         f.cur = { x, z, rot: -yaw * 180 / Math.PI, s: 1 };
         this.col.setDynamic('forklift', [rotatedAABB(x, z, f.model.L, f.model.W, yaw, 2.2, 'montacargas')]);
         return;
       }
-      s -= l;
+      s -= g.len;
     }
   }
 
