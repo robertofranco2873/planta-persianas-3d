@@ -16,6 +16,8 @@ export class Player {
   camDist = 6;
   private camDistSmooth = 6;
   drone = false;
+  /** multiplicador de sensibilidad de la cámara (1 = valor original) */
+  sensMul = 1;
   /** Vista en primera persona (P). */
   firstPerson = false;
   dronePos = new THREE.Vector3();
@@ -49,7 +51,7 @@ export class Player {
 
   update(dt: number, input: Input, controlsEnabled: boolean) {
     const m = input.mouse();
-    const sens = 0.0024;
+    const sens = 0.0024 * this.sensMul;
     if (this.drone) return this.updateDrone(dt, input, m, controlsEnabled);
     if (controlsEnabled) {
       this.camYaw -= m.dx * sens;
@@ -139,8 +141,8 @@ export class Player {
 
   private updateDrone(dt: number, input: Input, m: { dx: number; dy: number; wheel: number }, enabled: boolean) {
     if (enabled) {
-      this.droneYaw -= m.dx * 0.0024;
-      this.dronePitch = clamp(this.dronePitch - m.dy * 0.0024, -1.5, 0.6);
+      this.droneYaw -= m.dx * 0.0024 * this.sensMul;
+      this.dronePitch = clamp(this.dronePitch - m.dy * 0.0024 * this.sensMul, -1.5, 0.6);
     }
     const sp = (input.down('ShiftLeft') ? 30 : 14) * dt;
     const fwd = new THREE.Vector3(-Math.sin(this.droneYaw), 0, -Math.cos(this.droneYaw));

@@ -214,6 +214,18 @@ async function main() {
   };
   $('btnEnter').addEventListener('click', enterGame);
   $('btnReset').addEventListener('click', () => { if (confirm('¿Borrar descubrimientos y progreso del recorrido?')) { disc.reset(); guide?.reset(); savePrefs({ gear: false }); player.ch.setGear(null, null); } });
+  // sensibilidad de cámara (1× = original)
+  const sensEl = $<HTMLInputElement>('sens');
+  const applySens = (v: number, save = true) => {
+    v = Math.min(3, Math.max(0.25, v || 1));
+    player.sensMul = v;
+    sensEl.value = String(v);
+    $('sensVal').textContent = v.toFixed(2) + '×';
+    if (save) savePrefs({ sens: v });
+  };
+  applySens(prefs.sens ?? 1, false);
+  sensEl.addEventListener('input', () => applySens(parseFloat(sensEl.value)));
+  $('sensReset').addEventListener('click', () => applySens(1));
   const chkGuide = $<HTMLInputElement>('chkGuide');
   chkGuide.checked = guide?.enabled ?? false;
   chkGuide.disabled = !guide;

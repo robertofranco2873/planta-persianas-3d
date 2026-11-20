@@ -146,3 +146,7 @@ body.touch .screen { justify-content: flex-start; overflow-y: auto; }
   body.touch #rotate p { font-family: Anton, sans-serif; font-size: 24px; }
 }
 @keyframes girar { 0%, 30% { transform: rotate(0deg); } 60%, 100% { transform: rotate(-90deg); } }
+
+.sens { display: flex; align-items: center; gap: 10px; }
+.sens input { flex: 1; min-width: 140px; accent-color: var(--amarillo); height: 28px; }
+.sens span { font-weight: 700; min-width: 48px; color: var(--amarillo); }

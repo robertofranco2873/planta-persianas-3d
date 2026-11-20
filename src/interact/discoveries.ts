@@ -31,7 +31,7 @@ function defaultQuality(): 'alta' | 'baja' {
   } catch { /* */ }
   return 'alta';
 }
-export function loadPrefs(): { quality: 'alta' | 'baja'; gear?: boolean } {
+export function loadPrefs(): { quality: 'alta' | 'baja'; gear?: boolean; sens?: number } {
   try { const r = localStorage.getItem(PREF); if (r) { const p = JSON.parse(r); return { ...p, quality: p.quality ?? defaultQuality() }; } } catch { /* */ }
   return { quality: defaultQuality() };
 }
