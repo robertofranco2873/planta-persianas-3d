@@ -96,3 +96,53 @@ button.small { padding: 6px 12px; font-size: 13px; background: var(--carbon); }
 #mission li.ok { color: var(--topo); text-decoration: line-through; }
 #mission li.ok span { background: #35d6ff; border-color: #35d6ff; color: var(--carbon); text-decoration: none; }
 #mission .mk { margin-top: 6px; font-size: 11px; color: var(--topo); }
+
+/* ---------- táctil (celular / tableta) ---------- */
+#touchui { position: fixed; inset: 0; z-index: 15; pointer-events: none; }
+#touchui .stick { position: fixed; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; border: 2px solid rgba(248,248,248,.55); background: rgba(44,46,49,.35); }
+#touchui .knob { position: absolute; left: 50%; top: 50%; width: 54px; height: 54px; border-radius: 50%; background: rgba(241,196,15,.85); transform: translate(-50%, -50%); }
+#touchui .tbtn { pointer-events: auto; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; font-family: Inter, sans-serif; font-weight: 700; color: var(--blanco); background: rgba(44,46,49,.78); border: 2px solid var(--topo); border-radius: 12px; }
+#touchui .tbtn:active { background: var(--cafe); border-color: var(--amarillo); }
+#touchui .act { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: 22px; width: 84px; height: 84px; border-radius: 50%; font-size: 20px; background: rgba(241,196,15,.9); color: var(--carbon); border-color: #fff; }
+#touchui .tgrid { position: fixed; right: max(112px, calc(env(safe-area-inset-right) + 96px)); bottom: 14px; display: grid; grid-template-columns: repeat(4, 64px); gap: 6px; }
+#touchui .tgrid .tbtn { height: 38px; font-size: 12px; padding: 0; }
+#touchui .tgrid .tbtn.drone { border-color: #35d6ff; }
+#touchui .tmenu, #touchui .thelp { position: fixed; top: 10px; width: 42px; height: 42px; font-size: 20px; padding: 0; }
+#touchui .tmenu { right: max(10px, env(safe-area-inset-right)); }
+#touchui .thelp { right: calc(max(10px, env(safe-area-inset-right)) + 50px); }
+.pclose { position: absolute; top: 8px; right: 10px; z-index: 2; width: 36px; height: 36px; border-radius: 50%; padding: 0; font-size: 18px; background: var(--carbon); }
+#panel { position: fixed; }
+#panel header { padding-right: 52px; }
+#rotate { display: none; }
+body.touch #hudKeys, body.touch #crosshair { display: none !important; }
+body.touch #prompt { pointer-events: auto; top: auto; bottom: 120px; padding: 10px 18px; }
+body.touch #mission { pointer-events: auto; }
+#mission.collapsed p, #mission.collapsed ul, #mission.collapsed .mk { display: none; }
+body.touch #minimap { top: 60px; width: 150px; height: 98px; }
+body.touch #notebook { inset: 8px; }
+body.touch #notebook .list { columns: 1; }
+body.touch #help { inset: 8px; }
+body.touch .screen { justify-content: flex-start; overflow-y: auto; }
+@media (max-height: 520px), (max-width: 760px) {
+  #hud { padding: 6px 9px; min-width: 0; top: 6px; left: 6px; }
+  #hudLayout { font-size: 15px; }
+  #hudKpis { font-size: 11px; line-height: 1.35; margin-top: 3px; }
+  #hudDisc { font-size: 10px; margin-top: 3px; padding-top: 3px; }
+  #mission { top: auto; bottom: 64px; left: 6px; width: 230px; font-size: 11px; padding: 6px 9px; }
+  body.touch #mission { top: 112px; bottom: auto; }
+  #mission .ms { font-size: 15px; }
+  #panel { left: 6px; right: 6px; top: 6px; bottom: 6px; width: auto; }
+  #toast { font-size: 20px; padding: 6px 16px; top: 8%; }
+  #toast small { font-size: 12px; }
+  .screen h1 { font-size: 24px; }
+  .screen { gap: 10px; padding: 12px; }
+  button.big { font-size: 20px; padding: 8px 28px; }
+  .menucols { padding: 10px 14px; gap: 14px; }
+  .controls { font-size: 12px; }
+}
+@media (orientation: portrait) {
+  body.touch #rotate { display: flex; position: fixed; inset: 0; z-index: 100; flex-direction: column; align-items: center; justify-content: center; background: var(--carbon); color: var(--blanco); text-align: center; padding: 30px; }
+  body.touch #rotate div { font-size: 72px; color: var(--amarillo); animation: girar 2s ease-in-out infinite; }
+  body.touch #rotate p { font-family: Anton, sans-serif; font-size: 24px; }
+}
+@keyframes girar { 0%, 30% { transform: rotate(0deg); } 60%, 100% { transform: rotate(-90deg); } }

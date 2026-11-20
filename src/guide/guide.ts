@@ -219,6 +219,6 @@ export class Guide {
     el.innerHTML = `<div class="mt">${this.R.titulo} · paso ${this.stepIdx + 1}/${n}</div>
       <div class="ms">${st.titulo}</div><p>${st.descripcion}</p>
       <ul>${st.objetivos.map((o) => `<li class="${this.done(o) ? 'ok' : ''}"><span>${this.done(o) ? '✓' : ''}</span>${o.texto}</li>`).join('')}</ul>
-      <div class="mk">Sigue la flecha azul · G ocultar guía</div>`;
+      <div class="mk">Sigue la flecha azul · ${document.body.classList.contains('touch') ? 'botón Guía para ocultar · toca para plegar' : 'G ocultar guía'}</div>`;
   }
 }

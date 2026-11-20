@@ -64,8 +64,11 @@ export class Player {
       if (input.down('KeyA') || input.down('ArrowLeft')) fx -= 1;
       if (input.down('KeyD') || input.down('ArrowRight')) fx += 1;
     }
-    const run = input.down('ShiftLeft') || input.down('ShiftRight');
-    const want = fx || fz ? (run ? 5.5 : 2.4) : 0;
+    // joystick táctil (analógico): empujarlo a fondo es correr
+    const ax = input.axis, am = Math.hypot(ax.x, ax.y);
+    if (controlsEnabled && am > 0.15) { fx = ax.x; fz = ax.y; }
+    const run = input.down('ShiftLeft') || input.down('ShiftRight') || am > 0.92;
+    const want = fx || fz ? (run ? 5.5 : 2.4 * (am > 0.15 ? Math.min(1, am * 1.3) : 1)) : 0;
     this.speed += (want - this.speed) * Math.min(1, dt * 10);
     if (fx || fz) {
       // dirección "adelante" = de la cámara hacia el personaje
@@ -143,6 +146,8 @@ export class Player {
     const fwd = new THREE.Vector3(-Math.sin(this.droneYaw), 0, -Math.cos(this.droneYaw));
     const rgt = new THREE.Vector3(-fwd.z, 0, fwd.x);
     if (enabled) {
+      const ax = input.axis;
+      if (Math.hypot(ax.x, ax.y) > 0.15) { this.dronePos.addScaledVector(fwd, sp * ax.y); this.dronePos.addScaledVector(rgt, sp * ax.x); }
       if (input.down('KeyW')) this.dronePos.addScaledVector(fwd, sp);
       if (input.down('KeyS')) this.dronePos.addScaledVector(fwd, -sp);
       if (input.down('KeyA')) this.dronePos.addScaledVector(rgt, -sp);

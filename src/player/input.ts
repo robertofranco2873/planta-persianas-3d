@@ -2,6 +2,10 @@ export class Input {
   keys = new Set<string>();
   dx = 0; dy = 0; wheel = 0;
   locked = false;
+  /** eje analógico del joystick táctil (x derecha, y adelante, -1..1) */
+  axis = { x: 0, y: 0 };
+  /** en táctil no se usa pointer lock */
+  noLock = false;
   private pressed: string[] = [];
   /** Si true, la rueda no hace zoom (p.ej. panel abierto). */
   onWheelOverride: ((d: number) => boolean) | null = null;
@@ -24,7 +28,7 @@ export class Input {
     }, { passive: true });
     document.addEventListener('pointerlockchange', () => { this.locked = document.pointerLockElement === this.canvas; });
   }
-  lock() { try { const p = this.canvas.requestPointerLock() as unknown as Promise<void> | undefined; p?.catch?.(() => {}); } catch { /* sin pointer lock */ } }
+  lock() { if (this.noLock) return; try { const p = this.canvas.requestPointerLock() as unknown as Promise<void> | undefined; p?.catch?.(() => {}); } catch { /* sin pointer lock */ } }
   unlock() { if (document.pointerLockElement) document.exitPointerLock(); }
   down(code: string) { return this.keys.has(code); }
   /** Teclas presionadas desde el último consumo. */

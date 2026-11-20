@@ -23,6 +23,7 @@ export class Discoveries {
 /** Calidad por defecto: baja en gráficos integrados (Intel/UHD/Iris, Radeon integrada, Mali…), alta en GPU dedicada. */
 function defaultQuality(): 'alta' | 'baja' {
   try {
+    if (matchMedia('(pointer: coarse)').matches) return 'baja';
     const gl = document.createElement('canvas').getContext('webgl2') ?? document.createElement('canvas').getContext('webgl');
     const ext = gl?.getExtension('WEBGL_debug_renderer_info');
     const name = String(ext && gl ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : '');

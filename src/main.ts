@@ -13,6 +13,7 @@ import { machineHtml, npcHtml, interactuableHtml, catOfInteractuable, Cat, CAT_L
 import { drawMap } from './ui/minimap';
 import { ribbon } from './util/geo';
 import { Guide } from './guide/guide';
+import { TouchControls, isTouchDevice } from './ui/touch';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r(null)));
@@ -30,6 +31,7 @@ async function main() {
   const loadbar = $('loadbar'), loadmsg = $('loadmsg');
   const progress = (f: number, msg: string) => { loadbar.style.width = `${Math.round(f * 100)}%`; loadmsg.textContent = msg; };
 
+  if (isTouchDevice()) document.body.classList.add('touch');
   const prefs = loadPrefs();
   const qs = new URLSearchParams(location.search);
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: qs.get('aa') === '1', powerPreference: 'high-performance' });
@@ -93,6 +95,13 @@ async function main() {
   if (prefs.gear) player.ch.setGear('#F1C40F', '#F1C40F');
 
   const input = new Input(canvas);
+  const touch = isTouchDevice();
+  input.noLock = touch;
+  if (touch) {
+    // celular/tableta: menos distancia de dibujado
+    camera.far = 320; camera.updateProjectionMatrix();
+    if (scene.fog instanceof THREE.Fog) { scene.fog.near = 60; scene.fog.far = 220; }
+  }
   const disc = new Discoveries();
   const guide = data.recorrido ? new Guide(data, data.recorrido, props, lm, col, disc, T) : null;
 
@@ -130,7 +139,14 @@ async function main() {
   const notebook = $('notebook'), help = $('help'), menu = $('menu'), minimap = $<HTMLCanvasElement>('minimap');
   const bigmap = $('bigmap'), bigmapc = $<HTMLCanvasElement>('bigmapc');
   $('controlsList').innerHTML = controlsHtml();
-  help.innerHTML = `<h2>Ayuda · controles</h2><div class="controls">${controlsHtml()}</div><p style="color:#9F938C;margin-top:14px">Explora libremente: acércate a máquinas, pantallas y personas y presiona <kbd>E</kbd>. Usa la palanca junto al tablero de producción (o <kbd>L</kbd>) para comparar el layout actual con el propuesto. H para cerrar.</p>`;
+  const TOUCH_HELP: [string, string][] = [
+    ['Joystick (izquierda)', 'Caminar; empújalo a fondo para correr'], ['Arrastrar (derecha)', 'Girar la cámara'], ['Pellizcar', 'Zoom'],
+    ['Ver', 'Interactuar con lo cercano (o toca el aviso)'], ['Layout · Flujos · Esc. B', 'Comparar layouts, ver flujos y escenario B'],
+    ['Guía', 'Mostrar/ocultar misiones y flecha'], ['1ª/3ª', 'Primera o tercera persona'], ['Mapa · Libreta', 'Mapa grande y descubrimientos'],
+    ['Dron', 'Cámara aérea (▲▼ subir/bajar, Techo)'], ['☰', 'Menú'],
+  ];
+  if (touch) $('controlsList').innerHTML = TOUCH_HELP.map(([k, v]) => `<div><kbd>${k}</kbd></div><div>${v}</div>`).join('');
+  help.innerHTML = touch ? `<h2>Ayuda · controles táctiles</h2><div class="controls">${$('controlsList').innerHTML}</div><p style="color:#9F938C;margin-top:14px">Toca ? para cerrar.</p>` : `<h2>Ayuda · controles</h2><div class="controls">${controlsHtml()}</div><p style="color:#9F938C;margin-top:14px">Explora libremente: acércate a máquinas, pantallas y personas y presiona <kbd>E</kbd>. Usa la palanca junto al tablero de producción (o <kbd>L</kbd>) para comparar el layout actual con el propuesto. H para cerrar.</p>`;
   let toastTimer = 0;
   const toast = (title: string, sub = '', secs = 2.6) => {
     toastEl.innerHTML = `${title}${sub ? `<small>${sub}</small>` : ''}`;
@@ -145,7 +161,7 @@ async function main() {
     const k = lm.layout.kpis;
     $('hudLayout').textContent = lm.layout.nombre + (lm.active === 'propuesto' && lm.showB ? ' · escenario B' : '');
     $('hudKpis').innerHTML = `<span>Capacidad/día</span> <b>${Math.round(hudVals.cap)}</b> persianas<br><span>Operadores/turno</span> <b>${Math.round(hudVals.ops)}</b> × ${k.turnos} turno${k.turnos > 1 ? 's' : ''}<br><span>Recorrido/persiana</span> <b>${Math.round(hudVals.rec)} m</b>${lm.showFlows ? '<br><span>Flujos:</span> ' + [...new Map(lm.layout.flujos.map((f) => [f.material, f.color])).entries()].map(([m, c]) => `<b style="color:${c === '#2B2C30' ? '#bbb' : c}">■</b> ${m}`).join(' ') : ''}`;
-    $('hudDisc').textContent = `${discCount()} / ${entries.length} descubiertos · Tab libreta`;
+    $('hudDisc').textContent = `${discCount()} / ${entries.length} descubiertos${touch ? '' : ' · Tab libreta'}`;
   };
   disc.listeners.push(renderHud);
 
@@ -169,7 +185,12 @@ async function main() {
   let talkingTo: NpcInst | null = null;
   let nearest: Target | null = null;
 
-  const openPanel = (html: string, t: Target) => { panel.innerHTML = html; panel.classList.remove('hidden'); panel.scrollTop = 0; panelTarget = t; };
+  const setPanel = (html: string) => {
+    if (touch) html = html.replace(/E para cerrar/g, 'Toca ✕ para cerrar').replace(/E para (continuar|terminar)/g, 'Toca Ver para $1');
+    panel.innerHTML = html + '<button class="pclose" aria-label="Cerrar">✕</button>';
+    panel.querySelector('.pclose')!.addEventListener('click', () => closePanel());
+  };
+  const openPanel = (html: string, t: Target) => { setPanel(html); panel.classList.remove('hidden'); panel.scrollTop = 0; panelTarget = t; };
   const closePanel = () => { panel.classList.add('hidden'); panelTarget = null; talkingTo = null; };
   input.onWheelOverride = (dy) => { if (panelTarget && !panel.classList.contains('hidden')) { panel.scrollTop += dy; return true; } return false; };
 
@@ -186,6 +207,10 @@ async function main() {
     for (const id of ['hud', 'hudKeys', 'minimap', 'crosshair']) $(id).classList.remove('hidden');
     renderHud();
     input.lock();
+    if (touch) {
+      // pantalla completa y horizontal donde el navegador lo permite (Android); en iPhone se ignora
+      try { const r = document.documentElement.requestFullscreen?.(); r?.then(() => (screen.orientation as any)?.lock?.('landscape')).catch(() => {}); } catch { /* */ }
+    }
   };
   $('btnEnter').addEventListener('click', enterGame);
   $('btnReset').addEventListener('click', () => { if (confirm('¿Borrar descubrimientos y progreso del recorrido?')) { disc.reset(); guide?.reset(); savePrefs({ gear: false }); player.ch.setGear(null, null); } });
@@ -249,7 +274,7 @@ async function main() {
     if (panelTarget) {
       if (panelTarget.kind === 'npc' && talkingTo) {
         dialogIdx++;
-        if (dialogIdx < talkingTo.n.dialogo.length) { panel.innerHTML = npcHtml(talkingTo.n, dialogIdx); return; }
+        if (dialogIdx < talkingTo.n.dialogo.length) { setPanel(npcHtml(talkingTo.n, dialogIdx)); return; }
       }
       closePanel();
       return;
@@ -282,7 +307,7 @@ async function main() {
     toast(lm.layout.nombre, lm.layout.descripcion, 3.5);
     setHudTarget();
     renderHud();
-    if (panelTarget?.it?.id === 'tablero_produccion') panel.innerHTML = interactuableHtml(data, lm, panelTarget.it);
+    if (panelTarget?.it?.id === 'tablero_produccion') setPanel(interactuableHtml(data, lm, panelTarget.it));
   });
   lm.onB.push(() => renderHud());
 
@@ -328,6 +353,17 @@ async function main() {
     }
   });
 
+  // ---------------- táctil
+  const touchUI = touch ? new TouchControls(input, canvas, () => { if (started && overlay === 'none') showMenu(true); }, () => { if (started && overlay === 'none') interact(); }) : null;
+  if (touch) {
+    promptEl.addEventListener('pointerdown', (e) => { e.preventDefault(); interact(); });
+    bigmap.addEventListener('pointerdown', () => { showBig = false; bigmap.classList.add('hidden'); });
+    help.addEventListener('pointerdown', () => help.classList.add('hidden'));
+    const mission = $('mission');
+    if (innerHeight < 500) mission.classList.add('collapsed');
+    mission.addEventListener('pointerdown', () => mission.classList.toggle('collapsed'));
+  }
+
   // ---------------- bucle
   let last = performance.now(), elapsed = 0;
   let frame = 0;
@@ -344,6 +380,7 @@ async function main() {
     frame++;
     fpsAcc += dt; fpsN++;
     const controls = started && overlay === 'none';
+    touchUI?.update(player.drone, controls);
     const P = (window as any).__prof ??= {}; let tp = performance.now(); const mark = (k: string) => { const n = performance.now(); P[k] = (P[k] ?? 0) * 0.95 + (n - tp) * 0.05; tp = n; };
     player.update(dt, input, controls); mark('player');
     lm.update(dt, t); mark('layout');
@@ -382,7 +419,7 @@ async function main() {
     }
     if (nearest && !panelTarget) {
       const verb = nearest.kind === 'npc' ? 'Hablar' : nearest.kind === 'lever' ? 'Usar' : 'Ver';
-      promptEl.innerHTML = `<span class="k">E</span>${verb} · ${nearest.label}${!disc.has(nearest.key) && nearest.kind !== 'lever' ? ' <span style="color:#F1C40F">●</span>' : ''}`;
+      promptEl.innerHTML = `<span class="k">${touch ? 'Toca' : 'E'}</span>${verb} · ${nearest.label}${!disc.has(nearest.key) && nearest.kind !== 'lever' ? ' <span style="color:#F1C40F">●</span>' : ''}`;
       promptEl.classList.remove('hidden');
     } else promptEl.classList.add('hidden');
     if (panelTarget) {

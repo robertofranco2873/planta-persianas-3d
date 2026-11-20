@@ -25,6 +25,10 @@ Recorrido 3D de mundo abierto por la planta de persianas motorizadas de Apodaca,
 | H | Ayuda |
 | Esc | Menú (pausa y calidad gráfica) |
 
+## Celular y tableta
+
+El mismo enlace funciona en celular (en horizontal). Si el dispositivo es táctil aparecen los controles: joystick a la izquierda para caminar (a fondo para correr), arrastrar a la derecha para girar la cámara, pellizcar para zoom y botones para Ver, Layout, Flujos, Escenario B, Guía, 1ª/3ª persona, Dron, Mapa, Libreta, ayuda (?) y menú (☰). Arranca en calidad baja. Para probar los controles táctiles en computadora agrega `?touch=1` al enlace. `scripts/prueba_movil.mjs` simula un teléfono con toques reales.
+
 ## Recorrido guiado
 
 Apareces afuera, en la banqueta del estacionamiento, y entras por la **entrada principal**. Un torniquete obliga a pasar por la **recepción**; los portones de recibo están cerrados y las salidas de emergencia sólo se abren desde dentro. Las puertas (corredizas de vidrio en la entrada, batientes en oficinas y en el acceso a la nave) se abren solas al acercarte. Las misiones siguen el orden de una visita real: recepción → oficinas → seguridad (EPP) → almacén de materia prima → corte → tela y entubado → ensamble → pruebas → empaque y producto terminado → andenes → comparación de layouts → flujos → punto de reunión. Una flecha azul en el piso (calculada con A* para no atravesar muros ni máquinas) indica a dónde ir; se oculta con **G** o desde el menú. Los pasos y textos están en `public/data/recorrido.json`.
