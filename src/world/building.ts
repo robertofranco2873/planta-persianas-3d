@@ -402,6 +402,20 @@ export function buildBuilding(data: GameData, M: Mats, col: Collision): Building
     const ez = annexRooms.find((r) => r.id === 'oficinas');
     const eZ = ez ? ez.z + ez.d / 2 : 50;
     entrance = { x: cx, z: eZ + 0.2 };
+    // techo del vestíbulo (pasillo de recepción) con plafones
+    const vz0 = z1 + WALL_T;
+    annexRoof.add(boxB(cx1 - cx0 + 0.3, 0.15, eZ - vz0 + 0.1, M.officeRoof, cx, RH, (vz0 + eZ) / 2));
+    const nL = Math.max(1, Math.floor((eZ - vz0) / 2.8));
+    const vl = new THREE.InstancedMesh(boxGeo(0.6, 0.03, 0.6), M.glow, nL);
+    const m4v = new THREE.Matrix4();
+    for (let i = 0; i < nL; i++) vl.setMatrixAt(i, m4v.makeTranslation(cx, RH - 0.02, vz0 + (i + 0.5) * (eZ - vz0) / nL));
+    annexRoof.add(vl);
+    // cubre también la rendija entre lockers, comedor y la nave
+    const co = zonaById(data, 'comedor');
+    if (co) {
+      const gx0 = cx1, gx1 = co.x + co.w / 2, gz1 = co.z - co.d / 2;
+      annexRoof.add(boxB(gx1 - gx0 + 0.2, 0.14, gz1 - vz0 + 0.2, M.officeRoof, (gx0 + gx1) / 2, RH, (vz0 + gz1) / 2));
+    }
     const can = new THREE.Group();
     can.add(boxB(4.4, 0.2, 3.0, M.dark, cx, 3.2, eZ + 1.4));
     for (const dx of [-2.0, 2.0]) can.add(boxB(0.15, 3.2, 0.15, M.dark, cx + dx, 0, eZ + 2.7));
