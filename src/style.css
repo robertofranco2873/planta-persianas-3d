@@ -1,0 +1,87 @@
+:root {
+  --cafe: #6B5545;
+  --topo: #9F938C;
+  --carbon: #2C2E31;
+  --blanco: #F8F8F8;
+  --amarillo: #F1C40F;
+  --rojo: #C0392B;
+  --panel: rgba(44, 46, 49, 0.92);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #1b1c1e; color: var(--blanco); font-family: Inter, system-ui, sans-serif; }
+#c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+.hidden { display: none !important; }
+h1, h2, h3 { font-family: Anton, Impact, sans-serif; font-weight: 400; letter-spacing: .02em; }
+
+.screen { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+  background: radial-gradient(ellipse at center, rgba(107,85,69,.55), rgba(20,21,23,.96)); z-index: 50; padding: 24px; text-align: center; }
+.screen h1 { font-size: clamp(28px, 4vw, 54px); margin: 0; color: var(--blanco); text-shadow: 0 3px 0 var(--cafe); }
+.screen .sub { color: var(--topo); margin: 0; max-width: 760px; }
+.bar { width: min(520px, 80vw); height: 14px; border: 2px solid var(--topo); border-radius: 8px; overflow: hidden; background: var(--carbon); }
+#loadbar { height: 100%; width: 0; background: linear-gradient(90deg, var(--cafe), var(--amarillo)); transition: width .2s; }
+#loadmsg { color: var(--topo); font-size: 14px; }
+
+button { font-family: Inter, sans-serif; cursor: pointer; border: 2px solid var(--topo); background: var(--cafe); color: var(--blanco); border-radius: 8px; }
+button.big { font-family: Anton, sans-serif; font-size: 26px; padding: 12px 40px; letter-spacing: .04em; }
+button.big:hover { background: #7d6452; border-color: var(--amarillo); }
+button.small { padding: 6px 12px; font-size: 13px; background: var(--carbon); }
+.menucols { display: flex; gap: 28px; text-align: left; background: var(--panel); border: 1px solid var(--topo); border-radius: 10px; padding: 18px 24px; max-width: 900px; flex-wrap: wrap; }
+.menucols h3 { margin: 4px 0 8px; color: var(--amarillo); font-size: 18px; }
+.controls { display: grid; grid-template-columns: auto auto; gap: 4px 16px; font-size: 14px; }
+.controls kbd, #help kbd { display: inline-block; min-width: 26px; text-align: center; padding: 1px 6px; border: 1px solid var(--topo); border-bottom-width: 3px; border-radius: 5px; background: #3a3c40; font-family: Inter, sans-serif; font-size: 12px; }
+.opts label { display: block; font-size: 14px; margin: 4px 0; }
+
+#hud { position: fixed; top: 12px; left: 12px; z-index: 10; background: var(--panel); border: 1px solid var(--topo); border-radius: 8px; padding: 10px 14px; min-width: 250px; pointer-events: none; }
+#hudLayout { font-family: Anton, sans-serif; font-size: 20px; color: var(--amarillo); letter-spacing: .03em; }
+#hudKpis { font-size: 13px; margin-top: 6px; line-height: 1.55; }
+#hudKpis b { color: var(--blanco); }
+#hudKpis span { color: var(--topo); }
+#hudDisc { font-size: 12px; color: var(--topo); margin-top: 6px; border-top: 1px solid rgba(159,147,140,.4); padding-top: 5px; }
+#hudKeys { position: fixed; bottom: 8px; left: 50%; transform: translateX(-50%); z-index: 10; font-size: 12px; color: rgba(248,248,248,.8); background: rgba(44,46,49,.7); padding: 4px 12px; border-radius: 6px; pointer-events: none; white-space: nowrap; }
+#prompt { position: fixed; left: 50%; top: 62%; transform: translateX(-50%); z-index: 11; background: var(--panel); border: 2px solid var(--amarillo); border-radius: 8px; padding: 8px 16px; font-weight: 600; pointer-events: none; }
+#prompt .k { display: inline-block; background: var(--amarillo); color: var(--carbon); border-radius: 4px; padding: 0 7px; margin-right: 6px; font-weight: 700; }
+#toast { position: fixed; top: 18%; left: 50%; transform: translateX(-50%); z-index: 12; font-family: Anton, sans-serif; font-size: 40px; color: var(--blanco); background: rgba(107,85,69,.9); border: 2px solid var(--amarillo); padding: 10px 34px; border-radius: 10px; pointer-events: none; text-align: center; }
+#toast small { display: block; font-family: Inter, sans-serif; font-size: 14px; color: #eee; max-width: 640px; margin-top: 4px; }
+#crosshair { position: fixed; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px; border-radius: 50%; background: rgba(255,255,255,.6); z-index: 9; pointer-events: none; }
+
+#minimap { position: fixed; right: 12px; top: 12px; z-index: 10; border: 2px solid var(--topo); border-radius: 8px; background: rgba(44,46,49,.85); }
+#bigmap { position: fixed; inset: 0; z-index: 30; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(20,21,23,.8); }
+#bigmap canvas { max-width: 94vw; max-height: 86vh; border: 2px solid var(--topo); border-radius: 10px; background: var(--carbon); }
+#bigmap p { color: var(--topo); font-size: 13px; }
+
+#panel { position: fixed; right: 12px; top: 196px; bottom: 40px; width: min(440px, 42vw); z-index: 20; background: var(--panel); border: 1px solid var(--topo); border-radius: 10px; overflow-y: auto; padding: 0 0 14px; }
+#panel header { background: var(--cafe); padding: 12px 16px; border-radius: 10px 10px 0 0; position: sticky; top: 0; }
+#panel header h2 { margin: 0; font-size: 22px; }
+#panel header .cat { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: #e9dfd8; }
+#panel .body { padding: 8px 16px; font-size: 14px; line-height: 1.5; }
+#panel h4 { margin: 14px 0 4px; color: var(--amarillo); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+#panel ul { margin: 4px 0; padding-left: 18px; }
+#panel table { border-collapse: collapse; width: 100%; font-size: 13px; }
+#panel td { border-bottom: 1px solid rgba(159,147,140,.3); padding: 3px 4px; vertical-align: top; }
+#panel td:first-child { color: var(--topo); width: 40%; }
+#panel .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin: 2px 3px 2px 0; background: #3c3f44; border: 1px solid var(--topo); }
+#panel .tag.red { background: var(--rojo); border-color: #e57368; }
+#panel .tag.yel { background: var(--amarillo); color: var(--carbon); border-color: #f7dc6f; }
+#panel .hint { color: var(--topo); font-size: 12px; margin-top: 12px; }
+#panel .dialog { font-size: 17px; background: rgba(255,255,255,.06); border-left: 4px solid var(--amarillo); padding: 10px 12px; border-radius: 4px; }
+#panel .todo { color: #ffb3a8; border: 1px dashed var(--rojo); padding: 6px; border-radius: 6px; font-size: 12px; }
+#panel svg text { font-family: Inter, sans-serif; }
+
+#notebook { position: fixed; inset: 5vh 10vw; z-index: 40; background: var(--panel); border: 1px solid var(--topo); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; }
+#notebook header { background: var(--cafe); padding: 12px 18px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+#notebook header h2 { margin: 0; font-size: 26px; }
+#notebook .count { font-weight: 700; color: var(--amarillo); }
+#notebook .filters button { padding: 4px 10px; margin-right: 4px; font-size: 13px; background: var(--carbon); }
+#notebook .filters button.on { background: var(--amarillo); color: var(--carbon); border-color: var(--amarillo); }
+#notebook .list { overflow-y: auto; padding: 12px 18px; columns: 2; column-gap: 28px; }
+#notebook .item { break-inside: avoid; padding: 5px 0; font-size: 14px; display: flex; gap: 8px; align-items: baseline; }
+#notebook .item .box { width: 16px; height: 16px; flex: 0 0 16px; border: 2px solid var(--topo); border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; }
+#notebook .item.done .box { background: var(--amarillo); border-color: var(--amarillo); color: var(--carbon); }
+#notebook .item.done .t { color: var(--blanco); }
+#notebook .item .t { color: var(--topo); }
+#notebook .item .c { font-size: 11px; color: #8d8580; }
+#notebook footer { padding: 8px 18px; font-size: 12px; color: var(--topo); }
+
+#help { position: fixed; inset: 10vh 20vw; z-index: 40; background: var(--panel); border: 1px solid var(--topo); border-radius: 12px; padding: 18px 26px; overflow-y: auto; }
+#help h2 { margin: 0 0 10px; color: var(--amarillo); }
+#help .controls { font-size: 15px; }

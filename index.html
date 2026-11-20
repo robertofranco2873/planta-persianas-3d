@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planta de persianas motorizadas · Equipo 4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <canvas id="c"></canvas>
+
+  <!-- Carga -->
+  <div id="loading" class="screen">
+    <h1>Planta de persianas motorizadas · Equipo 4</h1>
+    <div class="bar"><div id="loadbar"></div></div>
+    <p id="loadmsg">Cargando…</p>
+  </div>
+
+  <!-- Inicio / pausa -->
+  <div id="menu" class="screen hidden">
+    <h1 id="menutitle">Planta de persianas motorizadas · Equipo 4</h1>
+    <p id="menusub" class="sub"></p>
+    <button id="btnEnter" class="big">Entrar a la planta</button>
+    <div class="menucols">
+      <div class="controls" id="controlsList"></div>
+      <div class="opts">
+        <h3>Calidad gráfica</h3>
+        <label><input type="radio" name="q" value="alta" /> Alta (sombras, 1.5× resolución)</label>
+        <label><input type="radio" name="q" value="baja" /> Baja (sin sombras, 1× resolución)</label>
+        <h3>Progreso</h3>
+        <button id="btnReset" class="small">Reiniciar descubrimientos</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div id="hudLayout"></div>
+    <div id="hudKpis"></div>
+    <div id="hudDisc"></div>
+  </div>
+  <div id="hudKeys" class="hidden">WASD mover · Shift correr · E ver · L layout · B escenario B · F flujos · M mapa · Tab libreta · V dron · H ayuda · Esc menú</div>
+  <div id="prompt" class="hidden"></div>
+  <div id="toast" class="hidden"></div>
+  <div id="crosshair" class="hidden"></div>
+
+  <canvas id="minimap" class="hidden" width="260" height="170"></canvas>
+  <div id="bigmap" class="hidden"><canvas id="bigmapc" width="1100" height="700"></canvas><p>M para cerrar</p></div>
+
+  <aside id="panel" class="hidden"></aside>
+  <div id="notebook" class="hidden"></div>
+  <div id="help" class="hidden"></div>
+
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>
